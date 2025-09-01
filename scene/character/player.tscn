@@ -1,0 +1,38 @@
+[gd_scene load_steps=7 format=3 uid="uid://cbdhuaxe66pds"]
+
+[ext_resource type="Script" uid="uid://l37rhv5wnofp" path="res://script/character/you.gd" id="1_lo04n"]
+[ext_resource type="Resource" uid="uid://ifqkik8rk25b" path="res://stats/you/you.tres" id="2_5utgv"]
+[ext_resource type="Texture2D" uid="uid://b8d0gpcfuedg" path="res://art/texture/character/you_nohand.png" id="3_rrjs7"]
+[ext_resource type="Script" uid="uid://ce0xn3ulqj3gb" path="res://script/character_related/hand.gd" id="4_w2ep0"]
+[ext_resource type="Texture2D" uid="uid://botr6ujc224gq" path="res://art/texture/character/you_hand.png" id="5_1t3kv"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_dgbgk"]
+size = Vector2(11, 9)
+
+[node name="Player" type="CharacterBody2D" groups=["Player"]]
+self_modulate = Color(0, 0, 0, 1)
+collision_layer = 2
+collision_mask = 9
+script = ExtResource("1_lo04n")
+char_stats = ExtResource("2_5utgv")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_dgbgk")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+offset = Vector2(0, -30)
+zoom = Vector2(4, 4)
+limit_top = -100
+limit_bottom = 200
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+clip_children = 2
+texture = ExtResource("3_rrjs7")
+
+[node name="Hand" type="Node2D" parent="."]
+script = ExtResource("4_w2ep0")
+
+[node name="Hand_sprite" type="Sprite2D" parent="Hand"]
+position = Vector2(-5.5, -4.5)
+texture = ExtResource("5_1t3kv")
+centered = false

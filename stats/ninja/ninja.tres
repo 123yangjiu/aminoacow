@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="ChararacterStats" load_steps=3 format=3 uid="uid://b7n6cdcqkydt7"]
+
+[ext_resource type="Texture2D" uid="uid://xxvmh32jrd38" path="res://art/texture/character/ninja_black.png" id="1_bebdo"]
+[ext_resource type="Script" uid="uid://bptq7c5xo6cko" path="res://resource/character/character_stats.gd" id="1_grlkh"]
+
+[resource]
+script = ExtResource("1_grlkh")
+max_health = 100
+art = ExtResource("1_bebdo")
+speed = 150.0
+jump_speed = -300.0
+metadata/_custom_type_script = "uid://bptq7c5xo6cko"

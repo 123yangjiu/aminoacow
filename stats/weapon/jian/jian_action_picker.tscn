@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://d2sotolildr0x"]
+
+[ext_resource type="Script" uid="uid://dhujs6oxeio5j" path="res://scene/action/action_picker.gd" id="1_q0okk"]
+
+[node name="JianActionPicker" type="Node"]
+script = ExtResource("1_q0okk")
+
+[node name="NormalAttack" type="Node" parent="."]
+
+[node name="Action2" type="Node" parent="."]

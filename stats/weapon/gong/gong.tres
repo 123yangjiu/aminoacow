@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="Weapon" load_steps=4 format=3 uid="uid://do8nqwhctp3q0"]
+
+[ext_resource type="Texture2D" uid="uid://bj712a4bedt4n" path="res://stats/weapon/gong/bow.png" id="1_rn4t6"]
+[ext_resource type="Shape2D" uid="uid://oc5k3q34pf1" path="res://stats/weapon/gong/gong_shape.tres" id="2_8blvv"]
+[ext_resource type="Script" uid="uid://j535ep7c8mk7" path="res://resource/weapon/weapon_stats.gd" id="3_xpq1d"]
+
+[resource]
+script = ExtResource("3_xpq1d")
+attack = 5
+icon = ExtResource("1_rn4t6")
+init_offset = Vector2(4, -1)
+attackshape = ExtResource("2_8blvv")
+id = "gong"
+metadata/_custom_type_script = "uid://j535ep7c8mk7"

@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://d3neyo511jsp6"]
+
+[ext_resource type="Script" uid="uid://dhujs6oxeio5j" path="res://scene/action/action_picker.gd" id="1_j72vd"]
+
+[node name="WhoActionPicker" type="Node"]
+script = ExtResource("1_j72vd")
+
+[node name="Action1" type="Node" parent="."]
+
+[node name="Action2" type="Node" parent="."]

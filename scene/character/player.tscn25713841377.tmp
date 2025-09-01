@@ -1,0 +1,26 @@
+[gd_scene load_steps=5 format=3 uid="uid://cbdhuaxe66pds"]
+
+[ext_resource type="Script" uid="uid://l37rhv5wnofp" path="res://script/you.gd" id="1_lo04n"]
+[ext_resource type="Resource" uid="uid://ifqkik8rk25b" path="res://stats/you/you.tres" id="2_5utgv"]
+[ext_resource type="Texture2D" uid="uid://3y22ns06i7ns" path="res://art/texture/character/you.png" id="2_bb8yv"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_dgbgk"]
+size = Vector2(11, 9)
+
+[node name="Player" type="CharacterBody2D"]
+self_modulate = Color(0, 0, 0, 1)
+collision_layer = 2
+collision_mask = 15
+script = ExtResource("1_lo04n")
+char_stats = ExtResource("2_5utgv")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_dgbgk")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+offset = Vector2(0, -50)
+zoom = Vector2(4, 4)
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+clip_children = 2
+texture = ExtResource("2_bb8yv")

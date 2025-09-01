@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="ChararacterStats" load_steps=3 format=3 uid="uid://ifqkik8rk25b"]
+
+[ext_resource type="Texture2D" uid="uid://b8d0gpcfuedg" path="res://art/texture/character/you_nohand.png" id="1_takd6"]
+[ext_resource type="Script" uid="uid://bptq7c5xo6cko" path="res://resource/character/character_stats.gd" id="2_urpni"]
+
+[resource]
+script = ExtResource("2_urpni")
+max_health = 30
+art = ExtResource("1_takd6")
+speed = 175.0
+jump_speed = -250.0
+metadata/_custom_type_script = "uid://bptq7c5xo6cko"
