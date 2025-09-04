@@ -11,12 +11,12 @@ func perform()->void:
 	if ! weapon:
 		return
 	weapon.attack_shape.disabled = false
-	weapon.is_action = true
 	var tween = create_tween().set_trans(Tween.TRANS_CUBIC)
 	var start := player_hand.position
+	player.is_action = true
 	tween.tween_property(player_hand,"position",start+interval_1,interval_1_time)
 	tween.tween_property(player_hand,"position",start+end,end_time)
 	tween.tween_property(player_hand,"position",start,return_time)
 	await tween.finished
 	weapon.attack_shape.disabled = true
-	weapon.is_action = false
+	player.is_action = false

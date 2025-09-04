@@ -1,4 +1,4 @@
-class_name ChararacterStats
+class_name CharacterStats
 extends Resource
 
 @warning_ignore("unused_signal")

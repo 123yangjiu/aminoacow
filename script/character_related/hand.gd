@@ -9,7 +9,7 @@ func add_weapon(weapon_stats:WeaponStats)->void:
 	var weapon_ready = weapon_template.instantiate()
 	weapon_ready.stats = weapon_stats
 	self.add_child(weapon_ready)
-	get_parent().current_weapon = weapon_ready
+	get_tree().get_first_node_in_group("Player").current_weapon = weapon_ready
 
 func hand_move()->void:
 	

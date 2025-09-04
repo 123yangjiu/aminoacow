@@ -3,7 +3,7 @@
 class_name Ninja
 extends CharacterBody2D
 
-@export var char_stats:ChararacterStats
+@export var char_stats:CharacterStats
 
 #node-related
 @onready var sprite_2d: Sprite2D = $Sprite2D
