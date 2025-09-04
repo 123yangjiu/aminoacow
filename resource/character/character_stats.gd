@@ -14,6 +14,7 @@ var health:int :set = set_health
 var health_mode:float = 1.0
 
 
+
 func set_health(value:int)->void:
 	health = clampi(value,0,max_health)
 	stats_changed.emit()
