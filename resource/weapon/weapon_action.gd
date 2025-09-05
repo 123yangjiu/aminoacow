@@ -7,5 +7,6 @@ var weapon:Weapon
 var player:Player
 var player_hand:Node2D
 
-func perform()->void:
+@warning_ignore("unused_parameter")
+func perform(direction)->void:
 	pass

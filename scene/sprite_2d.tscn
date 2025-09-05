@@ -1,0 +1,11 @@
+[gd_scene load_steps=4 format=3 uid="uid://b0w8dxp5kgn2w"]
+
+[ext_resource type="Shader" uid="uid://cvs3xmx2sv21u" path="res://resource/shader/simple_flip_shader.gdshader" id="1_we0w8"]
+[ext_resource type="Texture2D" uid="uid://3y22ns06i7ns" path="res://art/texture/character/you.png" id="2_we0w8"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_xcoio"]
+shader = ExtResource("1_we0w8")
+
+[node name="Sprite2D" type="Sprite2D"]
+material = SubResource("ShaderMaterial_xcoio")
+texture = ExtResource("2_we0w8")

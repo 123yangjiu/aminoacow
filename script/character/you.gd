@@ -15,14 +15,9 @@ extends CharacterBody2D
 @export var init_weapon:WeaponStats
 @onready var current_weapon: Weapon
 #node-related
-	#shader
-var flip_material:ShaderMaterial
-var flip_target:bool = true
-var flip_animation_speed:float = 5.0
-var current_progress:float=0.0: set= set_current_progress
 	#action
 var is_action:bool=false
-var direction_bool:bool = true :set = set_direction
+var direction_bool:bool=true :set = set_direction
 var acceleration:int = 600
 var friction:int = 1000
 
@@ -38,10 +33,6 @@ func _ready() -> void:
 	char_stats.image_changed.connect(image_change)
 	if init_weapon:
 		hand.add_weapon(init_weapon)
-	#设置Shader
-	flip_material = ShaderMaterial.new()
-	flip_material.shader = preload("res://resource/shader/flip_shader.gdshader")
-	material = flip_material
 	#test
 	await get_tree().create_timer(1).timeout
 
@@ -50,27 +41,19 @@ func _physics_process(delta: float) -> void:
 	add_gravity(delta)
 	
 	jump()
-
-	smooth_move()
-
+	var direction := Input.get_axis("ui_left", "ui_right")
+	
+	smooth_move(direction)
+	
 	move_and_slide()
 	#other_input-related
-	attack()
+	attack(direction_bool)
 
 
 func set_direction(value)->void:
-	#if value != direction_bool:
-		#node_flip_h(value)
+	if value != direction_bool:
+		flip_hand(value)
 	direction_bool = value
-
-func node_flip_h(new_direction:bool)->void:
-	if ! flip_material:
-		return
-	var target_progress = 0.0 if new_direction else 1.0
-	var new_progress = lerp(current_progress,target_progress,flip_animation_speed*1/60)
-	print(new_progress)
-	flip_material.set_shader_parameter("flip_progress",new_progress)
-	print(flip_material.get_shader_parameter("flip_progress"))
 
 func add_gravity(delta)->void:
 	if not is_on_floor():
@@ -82,8 +65,7 @@ func jump()->void:
 	else:
 		if Input.is_action_just_released("jump") and velocity.y <JUMP_VELOCITY/2:
 			velocity.y *= 0.5
-func smooth_move()->void:
-	var direction := Input.get_axis("ui_left", "ui_right")
+func smooth_move(direction)->void:
 	if direction:
 		velocity.x = move_toward(velocity.x,direction * SPEED,acceleration)
 		if direction>0:
@@ -92,13 +74,22 @@ func smooth_move()->void:
 			direction_bool = false
 	else:
 		velocity.x = move_toward(velocity.x, 0, friction)
-
-func attack()->void:
+func flip_hand(direction)->void:
+	var tween = create_tween()
+	if ! direction:
+		tween.tween_property(hand,"scale",Vector2(-1,1),0.1)
+		tween.parallel().tween_property(hand,"position",Vector2(1.5,0),0.1)
+		#tween.tween_property(hand,"rotation_degrees",-180,0.1)
+	else:
+		tween.tween_property(hand,"scale",Vector2(1,1),0.1)
+		tween.parallel().tween_property(hand,"position",Vector2(2.5,0),0.1)
+	#tween.parallel().tween_property(current_weapon,"rotation_degrees",180,0.1)
+	#tween.tween_property(hand,"rotation_degrees",0,0.1)
+	
+	pass
+func attack(direction)->void:
 	if Input.is_action_just_pressed("attack") and ! is_action:
-		current_weapon.attack()
-
-func set_current_progress(value)->void:
-	current_progress = clampf(value,0.0,1.0)
+		current_weapon.attack(direction)
 
 func image_change()->void:
 	var image:Image = art.get_image()

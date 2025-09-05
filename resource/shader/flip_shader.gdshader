@@ -1,6 +1,6 @@
 shader_type canvas_item;
 //记录翻转状态
-uniform float flip_progress;
+uniform float flip_progress = 1.0;
 
 void fragment(){
 	//记录初始纹理

@@ -22,11 +22,9 @@ func set_stats(value:WeaponStats)->void:
 	action_picker.initial(self)
 	add_child(action_picker)
 
-func attack()->void:
+func attack(direction)->void:
 	var ready_action = action_picker.get_action()
-	ready_action.perform()
-
-
+	ready_action.perform(direction)
 
 func _on_body_shape_entered(_body_rid: RID, body: Node2D, _body_shape_index: int, _local_shape_index: int) -> void:
 	if body is Ninja:
