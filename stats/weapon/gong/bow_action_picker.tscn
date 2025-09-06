@@ -1,0 +1,14 @@
+[gd_scene load_steps=4 format=3 uid="uid://ccya7yy3bgeya"]
+
+[ext_resource type="Script" uid="uid://dhujs6oxeio5j" path="res://scene/action/action_picker.gd" id="1_ahfls"]
+[ext_resource type="Script" uid="uid://c5eh774psa7b2" path="res://stats/weapon/gong/bow_shot.gd" id="2_nsukf"]
+[ext_resource type="PackedScene" uid="uid://oy7b1drr28pn" path="res://stats/weapon/gong/arrow_scene.tscn" id="3_ja1fv"]
+
+[node name="BowAndArrow" type="Node"]
+script = ExtResource("1_ahfls")
+metadata/_custom_type_script = "uid://dhujs6oxeio5j"
+
+[node name="WeaponAction" type="Node" parent="."]
+script = ExtResource("2_nsukf")
+arrowScene = ExtResource("3_ja1fv")
+metadata/_custom_type_script = "uid://cuofx382xfv2x"
