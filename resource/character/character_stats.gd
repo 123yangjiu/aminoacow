@@ -9,7 +9,7 @@ signal image_changed
 @export var art:Texture2D
 @export var speed:float
 @export var jump_speed:float
-@export var roll_factor:	Vector2 = Vector2(0.5,0)
+@export var roll_factor:	float = 3.5
 @export var roll_interval:float = 1
 
 var health:int :set = set_health

@@ -18,6 +18,7 @@ extends CharacterBody2D
 	#action
 var is_action:bool=false
 var is_flip:bool = false
+var is_roll:bool = false
 var direction_bool:bool=true :set = set_direction
 var acceleration:int = 600
 var friction:int = 1000
@@ -36,12 +37,10 @@ func _ready() -> void:
 func _physics_process(delta: float) -> void:
 	#move-related
 	add_gravity(delta)
-	
+	var direction := Input.get_axis("ui_left", "ui_right")
 	jump()
-	var direction := Input.get_axis("move_left", "move_right")
-	
 	smooth_move(direction)
-	roll(direction)
+	roll(direction_bool)
 	
 	move_and_slide()
 	#other_input-related
@@ -66,6 +65,8 @@ func jump()->void:
 		if Input.is_action_just_released("jump") and velocity.y <JUMP_VELOCITY/2:
 			velocity.y *= 0.5
 func smooth_move(direction)->void:
+	if is_roll:
+		return
 	if direction:
 		velocity.x = move_toward(velocity.x,direction * SPEED,acceleration)
 		if is_action:
@@ -90,13 +91,22 @@ func flip_hand(direction)->void:
 	#tween.parallel().tween_property(current_weapon,"rotation_degrees",180,0.1)
 	#tween.tween_property(hand,"rotation_degrees",0,0.1)
 func attack(bool_direction)->void:
-	if Input.is_action_just_pressed("attack") and ! is_action and ! is_flip:
+	if Input.is_action_just_pressed("attack") and ! is_action and ! is_flip and ! is_roll:
 		current_weapon.attack(bool_direction)
-func roll(direction)->void:
-	if Input.is_action_just_pressed("roll"):
-		var tween := create_tween().set_ease(Tween.EASE_OUT)
-		var start := self.global_position
-		tween.tween_property(self,"global_position",start-char_stats.roll_factor*SPEED*direction,0.3)
+func roll(bool_direction)->void:
+	if Input.is_action_just_pressed("roll") and ! is_action and !is_roll:
+		is_roll = true
+		var dir := 1 if bool_direction else -1
+		var tween := create_tween().set_trans(Tween.TRANS_EXPO).set_parallel()
+		tween.tween_property(self,"velocity",Vector2(dir * SPEED*char_stats.roll_factor,velocity.y),0.1)
+		tween.set_trans(Tween.TRANS_LINEAR)
+		tween.tween_property(self,"rotation_degrees",360*dir,0.2)
+		await tween.finished
+		is_roll = false
+		#velocity.x = dir * SPEED*char_stats.roll_factor
+		#var tween := create_tween().set_ease(Tween.EASE_OUT)
+		#var start := self.global_position
+		#tween.tween_property(self,"global_position",start+char_stats.roll_factor*SPEED*dir,0.15)
 		pass
 	pass
 
