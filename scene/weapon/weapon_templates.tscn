@@ -2,7 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://cybcg5jbb6u47" path="res://stats/weapon/qiang/qiang.png" id="1_ujmgh"]
 [ext_resource type="Script" uid="uid://cfir032p0wohc" path="res://script/Weapon/weapon.gd" id="1_xcsre"]
-[ext_resource type="Resource" uid="uid://bx070af8rsp8s" path="res://stats/weapon/qiang/qiang.tres" id="2_ca758"]
+[ext_resource type="Resource" uid="uid://qlvyhrebtkbx" path="res://stats/weapon/jian/jian.tres" id="2_ca758"]
 [ext_resource type="Shape2D" uid="uid://cmkaoj4ii3vbw" path="res://stats/weapon/qiang/qiang_shape.tres" id="4_igf1b"]
 
 [node name="Name" type="Area2D"]
