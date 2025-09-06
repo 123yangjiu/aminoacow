@@ -9,6 +9,7 @@ signal image_changed
 @export var art:Texture2D
 @export var speed:float
 @export var jump_speed:float
+@export var attack_interal:float
 
 var health:int :set = set_health
 var health_mode:float = 1.0

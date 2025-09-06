@@ -7,6 +7,7 @@
 script = ExtResource("2_urpni")
 max_health = 30
 art = ExtResource("1_takd6")
-speed = 175.0
+speed = 150.0
 jump_speed = -250.0
+attack_interal = 0.3
 metadata/_custom_type_script = "uid://bptq7c5xo6cko"
