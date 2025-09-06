@@ -36,23 +36,23 @@ func _ready() -> void:
 func _physics_process(delta: float) -> void:
 	#move-related
 	add_gravity(delta)
-	
-	jump()
 	var direction := Input.get_axis("ui_left", "ui_right")
-	
+	jump()
 	smooth_move(direction)
+	roll(direction)
 	
 	move_and_slide()
 	#other_input-related
 	attack(direction_bool)
 
-
+#set_stats-related
 func set_direction(value)->void:
 	if value != direction_bool and ! is_action:
 		is_flip = true
 		flip_hand(value)
 	direction_bool = value
 
+#physice-related
 func add_gravity(delta)->void:
 	if not is_on_floor():
 		velocity += get_gravity() * delta
@@ -87,10 +87,16 @@ func flip_hand(direction)->void:
 	is_flip = false
 	#tween.parallel().tween_property(current_weapon,"rotation_degrees",180,0.1)
 	#tween.tween_property(hand,"rotation_degrees",0,0.1)
-	
-func attack(direction)->void:
+func attack(bool_direction)->void:
 	if Input.is_action_just_pressed("attack") and ! is_action and ! is_flip:
-		current_weapon.attack(direction)
+		current_weapon.attack(bool_direction)
+func roll(direction)->void:
+	if Input.is_action_just_pressed("roll"):
+		var tween := create_tween().set_ease(Tween.EASE_OUT)
+		var start := self.global_position
+		tween.tween_property(self,"global_position",start-char_stats.roll_factor*SPEED*direction,0.3)
+		pass
+	pass
 
 
 func image_change()->void:
