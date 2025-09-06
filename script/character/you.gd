@@ -17,13 +17,10 @@ extends CharacterBody2D
 #node-related
 	#action
 var is_action:bool=false
+var is_flip:bool = false
 var direction_bool:bool=true :set = set_direction
 var acceleration:int = 600
 var friction:int = 1000
-
-
-
-
 
 
 func _ready() -> void:
@@ -44,17 +41,20 @@ func _physics_process(delta: float) -> void:
 	var direction := Input.get_axis("move_left", "move_right")
 	
 	smooth_move(direction)
+	roll(direction)
 	
 	move_and_slide()
 	#other_input-related
 	attack(direction_bool)
 
-
+#set_stats-related
 func set_direction(value)->void:
-	if value != direction_bool:
+	if value != direction_bool and ! is_action:
+		is_flip = true
 		flip_hand(value)
 	direction_bool = value
 
+#physice-related
 func add_gravity(delta)->void:
 	if not is_on_floor():
 		velocity += get_gravity() * delta
@@ -68,6 +68,8 @@ func jump()->void:
 func smooth_move(direction)->void:
 	if direction:
 		velocity.x = move_toward(velocity.x,direction * SPEED,acceleration)
+		if is_action:
+			return
 		if direction>0:
 			direction_bool = true
 		else:
@@ -77,19 +79,27 @@ func smooth_move(direction)->void:
 func flip_hand(direction)->void:
 	var tween = create_tween()
 	if ! direction:
-		tween.tween_property(hand,"scale",Vector2(-1,1),0.1)
-		tween.parallel().tween_property(hand,"position",Vector2(1.5,0),0.1)
+		tween.tween_property(hand,"position",Vector2(1.5,0),0.1)
+		tween.parallel().tween_property(hand,"scale",Vector2(-1,1),0.1)
 		#tween.tween_property(hand,"rotation_degrees",-180,0.1)
 	else:
-		tween.tween_property(hand,"scale",Vector2(1,1),0.1)
-		tween.parallel().tween_property(hand,"position",Vector2(2.5,0),0.1)
+		tween.tween_property(hand,"position",Vector2(2.5,0),0.1)
+		tween.parallel().tween_property(hand,"scale",Vector2(1,1),0.1)
+	await tween.finished
+	is_flip = false
 	#tween.parallel().tween_property(current_weapon,"rotation_degrees",180,0.1)
 	#tween.tween_property(hand,"rotation_degrees",0,0.1)
-	
+func attack(bool_direction)->void:
+	if Input.is_action_just_pressed("attack") and ! is_action and ! is_flip:
+		current_weapon.attack(bool_direction)
+func roll(direction)->void:
+	if Input.is_action_just_pressed("roll"):
+		var tween := create_tween().set_ease(Tween.EASE_OUT)
+		var start := self.global_position
+		tween.tween_property(self,"global_position",start-char_stats.roll_factor*SPEED*direction,0.3)
+		pass
 	pass
-func attack(direction)->void:
-	if Input.is_action_just_pressed("attack") and ! is_action:
-		current_weapon.attack(direction)
+
 
 func image_change()->void:
 	var image:Image = art.get_image()
