@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="WeaponStats" load_steps=5 format=3 uid="uid://do8nqwhctp3q0"]
 
-[ext_resource type="PackedScene" uid="uid://ccya7yy3bgeya" path="res://stats/weapon/gong/bow_action_picker.tscn" id="1_8blvv"]
+[ext_resource type="PackedScene" path="res://stats/weapon/gong/bow_action_picker.tscn" id="1_8blvv"]
 [ext_resource type="Texture2D" uid="uid://bj712a4bedt4n" path="res://stats/weapon/gong/bow.png" id="1_rn4t6"]
 [ext_resource type="Shape2D" uid="uid://oc5k3q34pf1" path="res://stats/weapon/gong/gong_shape.tres" id="2_8blvv"]
 [ext_resource type="Script" uid="uid://j535ep7c8mk7" path="res://resource/weapon/weapon_stats.gd" id="3_xpq1d"]

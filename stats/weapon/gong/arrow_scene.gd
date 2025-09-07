@@ -54,8 +54,3 @@ func _on_body_shape_entered(_body_rid: RID, body: Node2D, _body_shape_index: int
 		queue_free()
 	
 	pass # Replace with function body.
-
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	pass
