@@ -24,6 +24,7 @@ var friction:int = 1000
 var is_action:bool=false
 var is_flip:bool = false
 var is_roll:bool = false
+var is_exchange:bool = false
 
 func _ready() -> void:
 	#初始化Stats
@@ -111,16 +112,15 @@ func roll(bool_direction)->void:
 #other_node-related
 func exchange_weapon()->void:
 	if Input.is_action_pressed("exchange_weapon"):
-		print("space")
+		var later_weapon = current_weapon
 		if Input.is_action_just_released("ui_up"):
 			current_weapon.queue_free()
 			hand.add_weapon(weapon_pack[0])
-			weapon_pack[0] =current_weapon.stats
-			print(weapon_pack)
+			weapon_pack[0] = later_weapon.stats
 		elif	 Input.is_action_just_released("ui_down"):
-			current_weapon.queue_free()
+			current_weapon.queue_free()                  
 			hand.add_weapon(weapon_pack[-1])
-			weapon_pack[-1] =current_weapon.stats
+			weapon_pack[-1] = later_weapon.stats
 
 
 func image_change()->void:
