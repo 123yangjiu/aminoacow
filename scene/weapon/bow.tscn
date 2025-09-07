@@ -1,0 +1,17 @@
+[gd_scene load_steps=5 format=3 uid="uid://dmhjckmcj1082"]
+
+[ext_resource type="Script" uid="uid://cfir032p0wohc" path="res://script/Weapon/weapon.gd" id="1_8454e"]
+[ext_resource type="Resource" uid="uid://do8nqwhctp3q0" path="res://stats/weapon/gong/gong.tres" id="2_c8wbp"]
+[ext_resource type="Texture2D" uid="uid://bj712a4bedt4n" path="res://stats/weapon/gong/bow.png" id="2_kbh8w"]
+[ext_resource type="Shape2D" uid="uid://oc5k3q34pf1" path="res://stats/weapon/gong/gong_shape.tres" id="3_c8wbp"]
+
+[node name="Bow" type="Area2D"]
+script = ExtResource("1_8454e")
+stats = ExtResource("2_c8wbp")
+metadata/_custom_type_script = "uid://cfir032p0wohc"
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_kbh8w")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = ExtResource("3_c8wbp")
