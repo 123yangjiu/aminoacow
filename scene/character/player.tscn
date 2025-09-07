@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://cbdhuaxe66pds"]
+[gd_scene load_steps=14 format=3 uid="uid://cbdhuaxe66pds"]
 
 [ext_resource type="Script" uid="uid://l37rhv5wnofp" path="res://script/character/you.gd" id="1_lo04n"]
 [ext_resource type="Resource" uid="uid://ifqkik8rk25b" path="res://stats/you/you.tres" id="2_5utgv"]
@@ -9,6 +9,7 @@
 [ext_resource type="Texture2D" uid="uid://botr6ujc224gq" path="res://art/texture/character/you_hand.png" id="5_1t3kv"]
 [ext_resource type="Resource" uid="uid://bx070af8rsp8s" path="res://stats/weapon/qiang/qiang.tres" id="5_im1mn"]
 [ext_resource type="Resource" uid="uid://do8nqwhctp3q0" path="res://stats/weapon/gong/gong.tres" id="6_jd10u"]
+[ext_resource type="PackedScene" uid="uid://284rgaoothpe" path="res://scene/weapon/weapon_container.tscn" id="10_e0121"]
 
 [sub_resource type="Shader" id="Shader_rrjs7"]
 code = "shader_type canvas_item;
@@ -75,3 +76,9 @@ offset = Vector2(0, -30)
 zoom = Vector2(4, 4)
 limit_top = -100
 limit_bottom = 200
+
+[node name="WeaponContainer" parent="." instance=ExtResource("10_e0121")]
+unique_name_in_owner = true
+modulate = Color(1, 1, 1, 0)
+offset_left = 14.0
+offset_right = 14.0
