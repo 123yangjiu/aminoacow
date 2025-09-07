@@ -9,6 +9,6 @@ max_health = 30
 art = ExtResource("1_takd6")
 speed = 150.0
 jump_speed = -250.0
-roll_factor = Vector2(2.5, 0)
+roll_factor = 3.0
 roll_interval = 1.0
 metadata/_custom_type_script = "uid://bptq7c5xo6cko"

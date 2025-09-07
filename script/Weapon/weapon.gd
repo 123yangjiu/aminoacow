@@ -12,7 +12,7 @@ func to_set_stats(the_stats:WeaponStats)->void:
 
 func set_stats(value:WeaponStats)->void:
 	if ! is_inside_tree():
-		await  ready
+		await ready
 	stats = value
 	icon.texture = stats.icon
 	attack_shape.shape = stats.attackshape
