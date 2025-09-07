@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://cocl4mo7spde7"]
+[gd_scene load_steps=5 format=3 uid="uid://cgri0f2ka35el"]
 
 [ext_resource type="Script" uid="uid://cfir032p0wohc" path="res://script/Weapon/weapon.gd" id="1_lggo0"]
 [ext_resource type="Resource" uid="uid://qlvyhrebtkbx" path="res://stats/weapon/jian/jian.tres" id="2_xpi22"]

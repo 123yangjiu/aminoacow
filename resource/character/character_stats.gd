@@ -9,12 +9,11 @@ signal image_changed
 @export var art:Texture2D
 @export var speed:float
 @export var jump_speed:float
-@export var roll_factor:	float = 3.5
+@export var roll_factor:	float =3.0
 @export var roll_interval:float = 1
 
 var health:int :set = set_health
 var health_mode:float = 1.0
-
 
 
 func set_health(value:int)->void:
