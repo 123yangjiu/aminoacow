@@ -11,6 +11,10 @@ signal image_changed
 @export var jump_speed:float
 @export var roll_factor:	float =3.0
 @export var roll_interval:float = 1
+# role default 1
+# 0 is player
+# 1 is not player but others
+@export var role : int = 1
 
 var health:int :set = set_health
 var health_mode:float = 1.0
@@ -19,6 +23,8 @@ var health_mode:float = 1.0
 func set_health(value:int)->void:
 	health = clampi(value,0,max_health)
 	stats_changed.emit()
+	if (role == 0):
+		Events.player_hp_changed.emit(float(health) / max_health, max_health)
 	var ori_health_mode = health_mode
 	health_mode = 0  #满血时是1，半血是0.5
 	for i in range(10):
