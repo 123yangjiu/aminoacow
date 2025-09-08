@@ -3,16 +3,17 @@
 [ext_resource type="PackedScene" uid="uid://cbdhuaxe66pds" path="res://scene/character/player.tscn" id="2_1ulb3"]
 [ext_resource type="TileSet" uid="uid://7pkhrqjr24r7" path="res://fold_resource/main_tile_set.tres" id="3_ide23"]
 [ext_resource type="PackedScene" uid="uid://01q2kdrfohs1" path="res://scene/character/ninja.tscn" id="4_5df6j"]
+[ext_resource type="PackedScene" uid="uid://pgnprmdvj076" path="res://scene/health_stat_control.tscn" id="4_ytx2v"]
 [ext_resource type="Resource" uid="uid://bx070af8rsp8s" path="res://stats/weapon/qiang/qiang.tres" id="5_5tjbu"]
 [ext_resource type="AudioStream" uid="uid://cpt58dfecrmyb" path="res://art/Soundtracks Alex Coldfire MP3/Good Old Days.mp3" id="5_ytx2v"]
 
 [node name="BattleScene" type="Node2D"]
 
 [node name="ColorRect" type="ColorRect" parent="."]
-offset_left = -466.0
-offset_top = -237.0
-offset_right = 577.0
-offset_bottom = 300.0
+offset_left = -463.0
+offset_top = -234.0
+offset_right = 580.0
+offset_bottom = 303.0
 mouse_filter = 2
 color = Color(0.36, 0.36, 0.36, 1)
 
@@ -26,6 +27,16 @@ follow_viewport_enabled = true
 [node name="Player" parent="CharacterLayer" instance=ExtResource("2_1ulb3")]
 position = Vector2(46, 90)
 init_weapon = ExtResource("5_5tjbu")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="CharacterLayer/Player"]
+offset = Vector2(830, 50)
+transform = Transform2D(1, 0, 0, 1, 830, 50)
+
+[node name="HealthStatControl" parent="CharacterLayer/Player/CanvasLayer" instance=ExtResource("4_ytx2v")]
+offset_left = 39.0
+offset_top = -3.0
+offset_right = 79.0
+offset_bottom = 37.0
 
 [node name="Ninja" parent="CharacterLayer" instance=ExtResource("4_5df6j")]
 position = Vector2(177, 91)
