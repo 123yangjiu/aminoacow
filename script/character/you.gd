@@ -21,7 +21,8 @@ const EXCHANGE_WEAPON_EFFECT = preload("res://scene/effect/exchange_weapon_effec
 @export var weapon_pack:Array[WeaponStats]
 @export var init_weapon:WeaponStats
 @onready var current_weapon: Weapon
-#node-related
+
+#self-related
 	#action
 var direction_bool:bool=true :set = set_direction
 var acceleration:int = 600
@@ -32,6 +33,7 @@ var is_flip:bool = false
 var is_roll:bool = false
 var is_exchange:bool = false
 var not_exchange := false
+var is_up_down_pressed
 
 func _ready() -> void:
 	#初始化Stats
@@ -132,6 +134,7 @@ func exchange_weapon(bool_direction)->void:
 		if !exchange_weapon_effect:
 			exchange_weapon_effect = EXCHANGE_WEAPON_EFFECT.instantiate()
 			camera_2d.add_child(exchange_weapon_effect)
+		#现身
 		is_exchange = true
 		var tween:=create_tween().set_trans(Tween.TRANS_EXPO)
 		weapon_container.update(weapon_pack[0].icon,weapon_pack[1].icon)
@@ -140,20 +143,36 @@ func exchange_weapon(bool_direction)->void:
 		Engine.time_scale = 0.5  
 		var later_weapon = current_weapon
 		var up_down_index = null
-		if Input.is_action_just_released("ui_up"):
-			up_down_index =0
-		elif Input.is_action_just_released("ui_down"):
+		match is_up_down_pressed:
+			null:
+				if Input.is_action_pressed("ui_down"):
+					weapon_container.add_shader(false)
+					is_up_down_pressed = "down"
+				elif Input.is_action_pressed("ui_up"):
+					weapon_container.add_shader(true)
+					is_up_down_pressed = "up"
+			"down":
+				if Input.is_action_pressed("ui_up"):
+					weapon_container.add_shader(true)
+					is_up_down_pressed = "upup"
+			"up":
+				if Input.is_action_pressed("ui_down"):
+					weapon_container.add_shader(false)
+					is_up_down_pressed = "downdown"
+		if Input.is_action_just_released("ui_up") or Input.is_action_just_released("ui_down"):
 			up_down_index = -1
+			match is_up_down_pressed:
+				"down","downdown":
+					up_down_index = 1
+				"up","upup":
+					up_down_index = 0
+		
 		if up_down_index != null:
 			current_weapon.queue_free()
 			hand.add_weapon(weapon_pack[up_down_index])
 			weapon_pack[up_down_index] = later_weapon.stats
-			tween.tween_property(weapon_container,"modulate",Color(1,1,1,0),0.03)
-			await tween.finished
-			weapon_container.queue_free()
-			exchange_weapon_effect.queue_free()
-			is_exchange = false
-			Engine.time_scale = 1.0
+			#tween.tween_property(weapon_container,"modulate",Color(1,1,1,0),0.03)
+			exchange_over()
 			not_exchange = true
 			await get_tree().create_timer(2).timeout
 			not_exchange = false
@@ -161,11 +180,15 @@ func exchange_weapon(bool_direction)->void:
 		if Input.is_action_just_released("exchange_weapon"):
 			tween.tween_property(weapon_container,"modulate",Color(1,1,1,0),0.03)
 			await tween.finished
-			weapon_container.queue_free()
-			exchange_weapon_effect.queue_free()
-			Engine.time_scale = 1.0
-			is_exchange = false
-			
+			exchange_over()
+
+func exchange_over()->void:
+	weapon_container.queue_free()
+	exchange_weapon_effect.queue_free()
+	Engine.time_scale = 1.0
+	is_exchange = false
+	is_up_down_pressed = null
+	weapon_container.delete_shader()
 
 func image_change()->void:
 	var image:Image = art.get_image()
