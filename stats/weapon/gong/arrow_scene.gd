@@ -38,7 +38,7 @@ func _physics_process(delta: float) -> void:
 	var motion = Vector2(speed, speedY) * delta
 	position += motion
 	#move_toward(motion)
-	print("To ", position)
+	#print("To ", position)
 
 
 func _on_body_shape_entered(_body_rid: RID, body: Node2D, _body_shape_index: int, _local_shape_index: int) -> void:
