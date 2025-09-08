@@ -16,6 +16,7 @@ texture = ExtResource("2_86e3w")
 shape = ExtResource("2_nkrpt")
 
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+rect = Rect2(-7, -2, 14, 4)
 
 [node name="Timer" type="Timer" parent="VisibleOnScreenNotifier2D"]
 wait_time = 0.2

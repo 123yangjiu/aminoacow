@@ -1,0 +1,89 @@
+[gd_scene load_steps=7 format=3 uid="uid://pgnprmdvj076"]
+
+[ext_resource type="Script" uid="uid://d2tqmichfraq8" path="res://script/character_related/health_stat_control.gd" id="1_1bxaa"]
+[ext_resource type="Texture2D" uid="uid://cjyr1lehb7mvi" path="res://icon.svg" id="1_aqcnw"]
+
+[sub_resource type="Shader" id="Shader_aqcnw"]
+code = "// NOTE: Shader automatically converted from Godot Engine 4.4.1.stable's CanvasItemMaterial.
+
+shader_type canvas_item;
+render_mode blend_mix;
+
+uniform float hp : hint_range(0.0, 1.0);
+uniform float radius : hint_range(0.0, 0.5);
+uniform sampler2D noise;
+
+//uniform vec4 red = vec4(239., 65., 54., 255.);
+uniform vec4 RED = vec4(0.937, 0.254, 0.211, .7);
+// uniform vec4 red = vec4(255., 0., 0., 255.);
+uniform vec4 GREY = vec4(26., 41., 51., 200.);
+
+uniform float offset_rate_x : hint_range(0.0, 10.0) = 1.0;
+uniform float offset_rate_y : hint_range(0.0, 10.0) = 1.0;
+//uniform vec4 red = vec4(26., 41., 51., 255.);
+
+float dis(vec2 a, vec2 b) {
+	return sqrt((a.x - b.x) * (a.x - b.x) + (a.y - b.y) * (a.y - b.y));
+}
+
+bool onBorder(vec2 xy) {
+	if ((xy.x < radius || xy.x + radius > 1.0) && (xy.y < radius || xy.y + radius > 1.0)) {
+		float minDis = min(
+				min(dis(xy, vec2(radius, radius)), dis(xy, vec2(radius, 1. - radius))),
+				min(dis(xy, vec2(1. - radius, radius)), dis(xy, vec2(1. - radius, 1. - radius)))
+		);
+		return (minDis > radius);
+	}
+	return false;
+}
+
+float sigmoid(float x) {
+	return 1. / (1. + exp(x));
+}
+
+void fragment() {
+	COLOR = GREY / 255.0;
+	if (UV.x < hp) COLOR = RED; // vec4(0.937, 0.254, 0.211, 1);
+	if (onBorder(UV)) COLOR = vec4(1, 1, 1, 0);
+}"
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_1bxaa"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_f703e"]
+width = 16
+height = 16
+noise = SubResource("FastNoiseLite_1bxaa")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_1bxaa"]
+shader = SubResource("Shader_aqcnw")
+shader_parameter/hp = 0.35
+shader_parameter/radius = 0.2
+shader_parameter/noise = SubResource("NoiseTexture2D_f703e")
+shader_parameter/RED = Vector4(0.937, 0.254, 0.211, 0.3)
+shader_parameter/GREY = Vector4(26, 41, 51, 255)
+shader_parameter/offset_rate_x = 1.0
+shader_parameter/offset_rate_y = 1.0
+
+[node name="HealthStatControl" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("1_1bxaa")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_1bxaa")
+position = Vector2(-1.19209e-07, -3.57628e-07)
+scale = Vector2(3.34766, 0.265625)
+texture = ExtResource("1_aqcnw")
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 1
+offset_left = -79.0
+offset_top = -23.0
+offset_right = 79.0
+offset_bottom = 22.0
+theme_override_font_sizes/font_size = 32
+text = "000/000"
+horizontal_alignment = 1
+vertical_alignment = 1
