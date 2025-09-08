@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://cbdhuaxe66pds"]
+[gd_scene load_steps=12 format=3 uid="uid://cbdhuaxe66pds"]
 
 [ext_resource type="Script" uid="uid://l37rhv5wnofp" path="res://script/character/you.gd" id="1_lo04n"]
 [ext_resource type="Resource" uid="uid://ifqkik8rk25b" path="res://stats/you/you.tres" id="2_5utgv"]
@@ -11,46 +11,10 @@
 [ext_resource type="Resource" uid="uid://do8nqwhctp3q0" path="res://stats/weapon/gong/gong.tres" id="6_jd10u"]
 [ext_resource type="PackedScene" uid="uid://284rgaoothpe" path="res://scene/weapon/weapon_container.tscn" id="10_e0121"]
 
-[sub_resource type="Shader" id="Shader_rrjs7"]
-code = "shader_type canvas_item;
-//记录翻转状态
-uniform float flip_progress = 1.0;
-
-void fragment(){
-	//记录初始纹理
-	vec4 color = texture(TEXTURE,UV);
-	
-	//计算翻转后的纹理
-	vec2 flipped_uv = UV;
-	if (flip_progress>0.0){
-		//确定翻转过程曲线
-		float flip_amount = abs(flip_progress -0.5)*2.0;
-		
-		//翻转
-		flipped_uv.x = mix(UV.x,1.0-UV.x,flip_amount);
-	}
-	//应用纹理
-	COLOR = texture(TEXTURE,flipped_uv);
-	
-	//plus效果
-	if (flip_progress>0.0 && flip_progress <1.0){
-		//修改透明度
-		COLOR.a *=0.8;
-	}
-	COLOR.a = color.a;
-}
-"
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_5srte"]
-shader = SubResource("Shader_rrjs7")
-shader_parameter/flip_progress = 1.0
-
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_dgbgk"]
 size = Vector2(11, 9)
 
 [node name="Player" type="CharacterBody2D" groups=["Player"]]
-self_modulate = Color(0, 0, 0, 1)
-material = SubResource("ShaderMaterial_5srte")
 collision_layer = 2
 collision_mask = 9
 script = ExtResource("1_lo04n")
