@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://bdinw4ucv2dfu"
+path="res://.godot/imported/Into The Battle.mp3-382f462cf9e389f0305bb154c0a7b640.mp3str"
+
+[deps]
+
+source_file="res://art/Soundtracks Alex Coldfire MP3/Into The Battle.mp3"
+dest_files=["res://.godot/imported/Into The Battle.mp3-382f462cf9e389f0305bb154c0a7b640.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

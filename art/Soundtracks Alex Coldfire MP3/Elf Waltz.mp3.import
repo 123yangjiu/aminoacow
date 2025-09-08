@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://bdq0y2i3tund3"
+path="res://.godot/imported/Elf Waltz.mp3-7e8c0f1367dfa22e1ac2fd5156836d6a.mp3str"
+
+[deps]
+
+source_file="res://art/Soundtracks Alex Coldfire MP3/Elf Waltz.mp3"
+dest_files=["res://.godot/imported/Elf Waltz.mp3-7e8c0f1367dfa22e1ac2fd5156836d6a.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

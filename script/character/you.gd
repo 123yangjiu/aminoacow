@@ -6,7 +6,8 @@ extends CharacterBody2D
 #node-related
 @onready var sprite_2d: Sprite2D = $Sprite2D
 @onready var hand: Hand = %Hand
-@onready var weapon_container: WeaponContainer = %WeaponContainer
+const WEAPON_CONTAINER = preload("res://scene/weapon/weapon_container.tscn")
+var weapon_container:WeaponContainer
 
 #char_stats_variable-related
 @onready var art:Texture2D = char_stats.art
@@ -50,14 +51,15 @@ func _physics_process(delta: float) -> void:
 	move_and_slide()
 	#other_input-related
 	attack(direction_bool)
-	exchange_weapon()
+	exchange_weapon(direction_bool)
 
 #set_stats-related
 func set_direction(value)->void:
 	if value != direction_bool and ! is_action:
 		is_flip = true
 		flip_hand(value)
-		weapon_container.flip_self()
+		if weapon_container:
+			weapon_container.flip_self()
 	direction_bool = value
 
 
@@ -113,10 +115,15 @@ func roll(bool_direction)->void:
 		is_roll = false
 
 #other_node-related
-func exchange_weapon()->void:
+func exchange_weapon(bool_direction)->void:
 	if not_exchange:
 		return
-	if Input.is_action_pressed("exchange_weapon") or is_exchange :
+	var dir := 1 if bool_direction else -1
+	if !weapon_container:
+		weapon_container = WEAPON_CONTAINER.instantiate()
+		add_child(weapon_container)
+		weapon_container.position = Vector2(14,0) * dir
+	if Input.is_action_pressed("exchange_weapon") or is_exchange and weapon_container:
 		is_exchange = true
 		var tween:=create_tween().set_trans(Tween.TRANS_EXPO)
 		weapon_container.update(weapon_pack[0].icon,weapon_pack[1].icon)
@@ -132,6 +139,8 @@ func exchange_weapon()->void:
 			hand.add_weapon(weapon_pack[up_down_index])
 			weapon_pack[up_down_index] = later_weapon.stats
 			tween.tween_property(weapon_container,"modulate",Color(1,1,1,0),0.03)
+			await tween.finished
+			weapon_container.queue_free()
 			is_exchange = false
 			not_exchange = true
 			await get_tree().create_timer(2).timeout
@@ -139,6 +148,8 @@ func exchange_weapon()->void:
 			
 		if Input.is_action_just_released("exchange_weapon"):
 			tween.tween_property(weapon_container,"modulate",Color(1,1,1,0),0.03)
+			await tween.finished
+			weapon_container.queue_free()
 			is_exchange = false
 			
 

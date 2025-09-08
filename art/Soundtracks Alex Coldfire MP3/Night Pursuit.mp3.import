@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://dqud3imi3krc1"
+path="res://.godot/imported/Night Pursuit.mp3-8a1224bdca0a20f0a89b1be54a6bb93b.mp3str"
+
+[deps]
+
+source_file="res://art/Soundtracks Alex Coldfire MP3/Night Pursuit.mp3"
+dest_files=["res://.godot/imported/Night Pursuit.mp3-8a1224bdca0a20f0a89b1be54a6bb93b.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4
