@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=4 uid="uid://dpfye6pgjp1ow"]
+[gd_scene load_steps=10 format=4 uid="uid://dpfye6pgjp1ow"]
 
 [ext_resource type="PackedScene" uid="uid://cbdhuaxe66pds" path="res://scene/character/player.tscn" id="2_1ulb3"]
 [ext_resource type="TileSet" uid="uid://7pkhrqjr24r7" path="res://fold_resource/main_tile_set.tres" id="3_ide23"]
@@ -6,6 +6,15 @@
 [ext_resource type="PackedScene" uid="uid://pgnprmdvj076" path="res://scene/health_stat_control.tscn" id="4_ytx2v"]
 [ext_resource type="Resource" uid="uid://bx070af8rsp8s" path="res://stats/weapon/qiang/qiang.tres" id="5_5tjbu"]
 [ext_resource type="AudioStream" uid="uid://cpt58dfecrmyb" path="res://art/Soundtracks Alex Coldfire MP3/Good Old Days.mp3" id="5_ytx2v"]
+[ext_resource type="AudioStream" uid="uid://cvacgjk01xlpt" path="res://art/othermusic/amane.mp3" id="7_5tjbu"]
+[ext_resource type="AudioStream" uid="uid://cni2d7q7aower" path="res://art/Soundtracks Alex Coldfire MP3/Distance.mp3" id="8_jvh4i"]
+
+[sub_resource type="AudioStreamPlaylist" id="AudioStreamPlaylist_uhd7g"]
+shuffle = true
+stream_count = 3
+stream_0 = ExtResource("5_ytx2v")
+stream_1 = ExtResource("7_5tjbu")
+stream_2 = ExtResource("8_jvh4i")
 
 [node name="BattleScene" type="Node2D"]
 
@@ -43,6 +52,5 @@ offset_bottom = 37.0
 position = Vector2(177, 91)
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("5_ytx2v")
+stream = SubResource("AudioStreamPlaylist_uhd7g")
 autoplay = true
-parameters/looping = false
