@@ -1,12 +1,16 @@
-[gd_scene format=3 uid="uid://5ui3ms1qls6p"]
+[gd_scene load_steps=2 format=3 uid="uid://5ui3ms1qls6p"]
 
-[node name="ExchangeWeaponEffect" type="Control"]
-layout_mode = 3
+[ext_resource type="Script" uid="uid://diggbu4wo0288" path="res://scene/effect/exchange_weapon_effect.gd" id="1_fm7dr"]
+
+[node name="ColorRect" type="ColorRect"]
+show_behind_parent = true
+custom_minimum_size = Vector2(500, 500)
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-
-[node name="EffectLayer" type="CanvasLayer" parent="."]
-layer = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+color = Color(0.1, 0.1, 0.1, 0)
+script = ExtResource("1_fm7dr")

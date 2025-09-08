@@ -13,12 +13,13 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_dgbgk"]
 size = Vector2(11, 9)
 
-[node name="Player" type="CharacterBody2D" groups=["Player"]]
-visibility_layer = 2
+[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("exchange_weapon_effect") groups=["Player"]]
+z_index = 1
 collision_layer = 2
 collision_mask = 9
 script = ExtResource("1_lo04n")
 char_stats = ExtResource("2_5utgv")
+exchange_weapon_effect = NodePath("")
 weapon_pack = Array[ExtResource("3_d4d1h")]([ExtResource("4_e0121"), ExtResource("5_im1mn"), ExtResource("6_jd10u")])
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -36,6 +37,7 @@ script = ExtResource("4_w2ep0")
 texture = ExtResource("5_1t3kv")
 
 [node name="Camera2D" type="Camera2D" parent="."]
+show_behind_parent = true
 offset = Vector2(0, -30)
 zoom = Vector2(4, 4)
 limit_top = -100

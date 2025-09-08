@@ -6,8 +6,12 @@ extends CharacterBody2D
 #node-related
 @onready var sprite_2d: Sprite2D = $Sprite2D
 @onready var hand: Hand = %Hand
+@onready var camera_2d: Camera2D = $Camera2D
+
 const WEAPON_CONTAINER = preload("res://scene/weapon/weapon_container.tscn")
 var weapon_container:WeaponContainer
+const EXCHANGE_WEAPON_EFFECT = preload("res://scene/effect/exchange_weapon_effect.tscn")
+@export var exchange_weapon_effect:ExchangeWeaponEffect
 
 #char_stats_variable-related
 @onready var art:Texture2D = char_stats.art
@@ -118,16 +122,22 @@ func roll(bool_direction)->void:
 func exchange_weapon(bool_direction)->void:
 	if not_exchange:
 		return
-	var dir := 1 if bool_direction else -1
-	if !weapon_container:
-		weapon_container = WEAPON_CONTAINER.instantiate()
-		add_child(weapon_container)
-		weapon_container.position = Vector2(14,0) * dir
 	if Input.is_action_pressed("exchange_weapon") or is_exchange and weapon_container:
+		var dir := 1 if bool_direction else -1
+		#添加weapon_container和effect
+		if !weapon_container:
+			weapon_container = WEAPON_CONTAINER.instantiate()
+			add_child(weapon_container)
+			weapon_container.position = Vector2(14,0) * dir
+		if !exchange_weapon_effect:
+			exchange_weapon_effect = EXCHANGE_WEAPON_EFFECT.instantiate()
+			camera_2d.add_child(exchange_weapon_effect)
 		is_exchange = true
 		var tween:=create_tween().set_trans(Tween.TRANS_EXPO)
 		weapon_container.update(weapon_pack[0].icon,weapon_pack[1].icon)
-		tween.tween_property(weapon_container,"modulate",Color(1,1,1,1),0.05)
+		tween.tween_property(weapon_container,"modulate",Color(1,1,1,1),0.025)
+		tween.parallel().tween_property(exchange_weapon_effect,"color",Color(0.1,0.1,0.1,0.7),0.025)
+		Engine.time_scale = 0.5  
 		var later_weapon = current_weapon
 		var up_down_index = null
 		if Input.is_action_just_released("ui_up"):
@@ -141,7 +151,9 @@ func exchange_weapon(bool_direction)->void:
 			tween.tween_property(weapon_container,"modulate",Color(1,1,1,0),0.03)
 			await tween.finished
 			weapon_container.queue_free()
+			exchange_weapon_effect.queue_free()
 			is_exchange = false
+			Engine.time_scale = 1.0
 			not_exchange = true
 			await get_tree().create_timer(2).timeout
 			not_exchange = false
@@ -150,6 +162,8 @@ func exchange_weapon(bool_direction)->void:
 			tween.tween_property(weapon_container,"modulate",Color(1,1,1,0),0.03)
 			await tween.finished
 			weapon_container.queue_free()
+			exchange_weapon_effect.queue_free()
+			Engine.time_scale = 1.0
 			is_exchange = false
 			
 
