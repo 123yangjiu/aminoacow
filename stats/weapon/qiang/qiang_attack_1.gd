@@ -1,9 +1,6 @@
 extends WeaponAction
 
-
-var interval_1 := Vector2(-1,0)
-var interval_1_time := 0.02
-var end := Vector2(8,0)
+var end := Vector2(12,0)
 var end_time := 0.1
 var return_time := 0.05
 

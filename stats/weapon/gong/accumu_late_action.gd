@@ -1,9 +1,5 @@
-#meta-name: WeaponAction
-#meta-description: Where make attack possible
 extends WeaponAction
-
-var end_time:float
-var back_time:float
+@export var arrowScene : PackedScene
 
 
 func perform(direction:bool)->void:
@@ -12,5 +8,4 @@ func perform(direction:bool)->void:
 	var start = player_hand.position
 	var tween = create_tween()
 	var dir = 1 if direction else -1
-	
 	

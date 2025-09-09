@@ -4,9 +4,10 @@ extends CharacterBody2D
 @export var char_stats:CharacterStats
 
 #node-related
-@onready var sprite_2d: Sprite2D = $Sprite2D
+@onready var sprite_2d: Sprite2D = %Sprite2D
 @onready var hand: Hand = %Hand
 @onready var camera_2d: Camera2D = $Camera2D
+@onready var ancher: Node2D = $Ancher
 
 const WEAPON_CONTAINER = preload("res://scene/weapon/weapon_container.tscn")
 var weapon_container:WeaponContainer
@@ -15,7 +16,9 @@ const EXCHANGE_WEAPON_EFFECT = preload("res://scene/effect/exchange_weapon_effec
 
 #char_stats_variable-related
 @onready var art:Texture2D = char_stats.art
+@onready var hand_art:Texture2D = hand.get_child(0).texture
 @onready var init_image:Image = art.get_image()
+@onready var hand_init_image:Image = hand_art.get_image()
 @onready var SPEED = char_stats.speed
 @onready var JUMP_VELOCITY:float = char_stats.jump_speed
 @export var weapon_pack:Array[WeaponStats]
@@ -85,6 +88,7 @@ func smooth_move(direction)->void:
 		return
 	if direction:
 		velocity.x = move_toward(velocity.x,direction * SPEED,acceleration)
+		ancher.rotation_degrees = lerp(ancher.rotation_degrees,direction*8,0.1)
 		if is_action:
 			return
 		if direction>0:
@@ -138,9 +142,9 @@ func exchange_weapon(bool_direction)->void:
 		is_exchange = true
 		var tween:=create_tween().set_trans(Tween.TRANS_EXPO)
 		weapon_container.update(weapon_pack[0].icon,weapon_pack[1].icon)
-		tween.tween_property(weapon_container,"modulate",Color(1,1,1,1),0.025)
-		tween.parallel().tween_property(exchange_weapon_effect,"color",Color(0.1,0.1,0.1,0.7),0.025)
-		Engine.time_scale = 0.5  
+		tween.tween_property(weapon_container,"modulate",Color(1,1,1,1),0.01)
+		tween.parallel().tween_property(exchange_weapon_effect,"color",Color(0.1,0.1,0.1,0.7),0.01)
+		Engine.time_scale = 0.2  
 		var later_weapon = current_weapon
 		var up_down_index = null
 		match is_up_down_pressed:
@@ -192,6 +196,7 @@ func exchange_over()->void:
 
 func image_change()->void:
 	var image:Image = art.get_image()
+	var hand_image:Image = hand_art.get_image()
 	var height = image.get_height()
 	var width = image.get_width()
 	#health_mode作为指标
@@ -199,8 +204,13 @@ func image_change()->void:
 	for y in range(ceil(n)):
 		for x in range(width):
 			var ori_color:Color = image.get_pixel(x,y)
+			var ori_hand_color := hand_image.get_pixel(x,y)
 			if ori_color == Color.WHITE:
-					image.set_pixel(x,y,Color.BLACK)
-			if ori_color == Color.BLACK:
+				image.set_pixel(x,y,Color.BLACK)
+			elif ori_color == Color.BLACK:
 				image.set_pixel(x,y,Color.WHITE)
+			if ori_hand_color == Color.WHITE:
+				hand_image.set_pixel(x,y,Color.BLACK)
+			elif ori_hand_color == Color.BLACK:
+				hand_image.set_pixel(x,y,Color.WHITE)
 	sprite_2d.texture = ImageTexture.create_from_image(image)

@@ -5,9 +5,9 @@ uniform vec4 glow_color : source_color = vec4(0.0, 0.8, 1.0, 1.0);
 // 发光强度
 uniform float glow_intensity : hint_range(0.0, 5.0) = 1.5;
 // 边框厚度
-uniform float outline_thickness : hint_range(0.0, 0.05) = 0.01;
+uniform float outline_thickness : hint_range(0.0, 0.05) = 0.05;
 // 边缘检测灵敏度
-uniform float edge_sensitivity : hint_range(0.1, 1.0) = 0.3;
+uniform float edge_sensitivity : hint_range(0.1, 1.0) = 0.8;
 
 void fragment() {
     // 获取原始颜色
