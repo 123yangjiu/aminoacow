@@ -55,5 +55,14 @@ unique_name_in_owner = true
 position = Vector2(2.5, 0)
 script = ExtResource("4_w2ep0")
 
-[node name="Hand_sprite" type="Sprite2D" parent="Hand"]
+[node name="HandLeft" type="Sprite2D" parent="Hand"]
+position = Vector2(-3, 0.5)
 texture = ExtResource("5_1t3kv")
+region_enabled = true
+region_rect = Rect2(4, 4, 2, 2)
+
+[node name="HandRight" type="Sprite2D" parent="Hand"]
+position = Vector2(2, 0.5)
+texture = ExtResource("5_1t3kv")
+region_enabled = true
+region_rect = Rect2(9, 4, 2, 2)

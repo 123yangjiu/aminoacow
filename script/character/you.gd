@@ -35,8 +35,11 @@ var is_action:bool=false
 var is_flip:bool = false
 var is_roll:bool = false
 var is_exchange:bool = false
-var not_exchange := false
 var is_up_down_pressed
+	#not_doing
+var not_exchange := false
+var not_roll := false
+
 
 func _ready() -> void:
 	#初始化Stats
@@ -114,6 +117,8 @@ func attack(bool_direction)->void:
 	if Input.is_action_just_pressed("attack") and ! is_action and ! is_flip and ! is_roll:
 		current_weapon.attack(bool_direction)
 func roll(bool_direction)->void:
+	if not_roll:
+		return
 	if Input.is_action_just_pressed("roll") and ! is_action and !is_roll:
 		is_roll = true
 		var dir := 1 if bool_direction else -1
@@ -123,6 +128,9 @@ func roll(bool_direction)->void:
 		tween.tween_property(self,"rotation_degrees",360*dir,0.2)
 		await tween.finished
 		is_roll = false
+		not_roll = true
+		await get_tree().create_timer(char_stats.roll_interval).timeoutp
+		not_roll = false
 
 #other_node-related
 func exchange_weapon(bool_direction)->void:

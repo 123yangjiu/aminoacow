@@ -10,7 +10,7 @@ signal image_changed
 @export var speed:float
 @export var jump_speed:float
 @export var roll_factor:	float =3.0
-@export var roll_interval:float = 1
+@export var roll_interval:float = 0.4
 # role default 1
 # 0 is player
 # 1 is not player but others
