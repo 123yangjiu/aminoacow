@@ -19,9 +19,10 @@ func set_stats(value:WeaponStats)->void:
 	attack_shape.shape = stats.attackshape
 	attack_shape.position = stats.attackshape_offset
 	self.position = stats.init_offset
-	action_picker = stats.action.instantiate()
-	action_picker.initial(self)
-	add_child(action_picker)
+	if stats.action:
+		action_picker = stats.action.instantiate()
+		action_picker.initial(self)
+		add_child(action_picker)
 
 func attack(direction)->void:
 	var ready_action = action_picker.get_action()

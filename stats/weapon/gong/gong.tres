@@ -1,10 +1,11 @@
-[gd_resource type="Resource" script_class="WeaponStats" load_steps=6 format=3 uid="uid://do8nqwhctp3q0"]
+[gd_resource type="Resource" script_class="WeaponStats" load_steps=7 format=3 uid="uid://do8nqwhctp3q0"]
 
 [ext_resource type="PackedScene" uid="uid://ccya7yy3bgeya" path="res://stats/weapon/gong/action/bow_action_picker.tscn" id="1_xpq1d"]
 [ext_resource type="Shape2D" uid="uid://oc5k3q34pf1" path="res://stats/weapon/gong/gong_shape.tres" id="2_8blvv"]
 [ext_resource type="SpriteFrames" uid="uid://dv3brwk2sps76" path="res://stats/weapon/gong/action/bow_draw_animatetres.tres" id="2_fb3r0"]
 [ext_resource type="Script" uid="uid://j535ep7c8mk7" path="res://resource/weapon/weapon_stats.gd" id="3_xpq1d"]
 [ext_resource type="Texture2D" uid="uid://bj712a4bedt4n" path="res://stats/weapon/gong/art/bow.png" id="4_fay26"]
+[ext_resource type="Resource" uid="uid://c75382k31wy2e" path="res://stats/weapon/gong/arrow.tres" id="6_fb3r0"]
 
 [resource]
 script = ExtResource("3_xpq1d")
@@ -16,4 +17,5 @@ attackshape_offset = Vector2(0, 0)
 id = "gong"
 action = ExtResource("1_xpq1d")
 animate = ExtResource("2_fb3r0")
+weapon_ralated = ExtResource("6_fb3r0")
 metadata/_custom_type_script = "uid://j535ep7c8mk7"

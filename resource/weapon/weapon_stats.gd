@@ -9,3 +9,4 @@ extends Resource
 @export var id:String
 @export var action:PackedScene
 @export var animate:SpriteFrames
+@export var weapon_ralated:WeaponToken

@@ -1,8 +1,7 @@
-[gd_scene load_steps=4 format=3 uid="uid://cocp1swijeynk"]
+[gd_scene load_steps=3 format=3 uid="uid://cocp1swijeynk"]
 
-[ext_resource type="Texture2D" uid="uid://cybcg5jbb6u47" path="res://stats/weapon/qiang/qiang.png" id="1_ujmgh"]
 [ext_resource type="Script" uid="uid://cfir032p0wohc" path="res://script/Weapon/weapon.gd" id="1_xcsre"]
-[ext_resource type="Shape2D" uid="uid://cmkaoj4ii3vbw" path="res://stats/weapon/qiang/qiang_shape.tres" id="4_igf1b"]
+[ext_resource type="Texture2D" uid="uid://bj712a4bedt4n" path="res://stats/weapon/gong/art/bow.png" id="2_45jeh"]
 
 [node name="Name" type="Area2D"]
 collision_layer = 8
@@ -11,11 +10,9 @@ priority = 2
 script = ExtResource("1_xcsre")
 
 [node name="Icon" type="Sprite2D" parent="."]
-texture = ExtResource("1_ujmgh")
+texture = ExtResource("2_45jeh")
 
 [node name="AttackShape" type="CollisionShape2D" parent="."]
-position = Vector2(4, 0)
-shape = ExtResource("4_igf1b")
 disabled = true
 
 [connection signal="body_shape_entered" from="." to="." method="_on_body_shape_entered"]

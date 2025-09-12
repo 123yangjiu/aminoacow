@@ -32,4 +32,4 @@ func generator() -> void:
 
 func _ready() -> void:
 	print("Generator Ready")
-	$GenerationTick.timeout.connect(generator)
+	#$GenerationTick.timeout.connect(generator)
