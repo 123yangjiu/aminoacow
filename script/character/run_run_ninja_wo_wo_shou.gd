@@ -34,7 +34,7 @@ func getSpeed(i, j, fixCollision = false):
 		if j == 0:
 			j = -1
 		if fixCollision:
-			j -= 0.7 if j < -1 else 1
+			j -= 0.6 if j < -1 else 1
 		Vy = -sqrt(- j * blockSize * 2 * g)
 		t = - Vy / g
 		Vx = i * blockSize / t
@@ -130,27 +130,29 @@ func searchTarget():
 
 var counter = 0
 var reachTo = TYPE_NIL
+var reachToPos
 func _physics_process(delta: float) -> void:
 	if is_on_floor() and (not is_instance_of(reachTo, TYPE_VECTOR2I) or counter > 20):
 		var next = searchTarget()
 		reachTo = next[0]
+		reachToPos = tileMap.map_to_local(reachTo)
 		print(reachTo)
 		velocity = next[1]
 		counter = 0
 	
 	if not is_on_floor():
 		velocity += get_gravity() * delta
-	
+		
 	move_and_slide()
 	counter += 1
 	
 	if is_instance_of(reachTo, TYPE_VECTOR2I):
-		print(position, " ", tileMap.map_to_local(reachTo), " ", dis(position, tileMap.map_to_local(reachTo)))
+		print(position, " ", reachToPos, " ", dis(position, reachToPos))
 		
 	if is_instance_of(reachTo, TYPE_VECTOR2I) \
-		and dis(position, tileMap.map_to_local(reachTo)) < 1.2:
+		and dis(position, reachToPos) < 1.2:
 		reachTo = TYPE_NIL
 	
 	if is_instance_of(reachTo, TYPE_VECTOR2I):
-		velocity = velocity.move_toward(player.position, 1)
+		velocity = velocity.move_toward(reachToPos, 1)
 		
