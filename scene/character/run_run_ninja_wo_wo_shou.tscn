@@ -1,17 +1,18 @@
-[gd_scene load_steps=5 format=3 uid="uid://01q2kdrfohs1"]
+[gd_scene load_steps=5 format=3 uid="uid://cq073cs0ot5yu"]
 
 [ext_resource type="Texture2D" uid="uid://xxvmh32jrd38" path="res://art/texture/character/ninja_black.png" id="1_ej6yx"]
-[ext_resource type="Script" uid="uid://b4kynp24xn4gm" path="res://script/character/ninja.gd" id="1_pcrvo"]
-[ext_resource type="Resource" uid="uid://b7n6cdcqkydt7" path="res://stats/ninja/ninja.tres" id="2_kvxwp"]
+[ext_resource type="Script" uid="uid://bydbbbkfkt7wt" path="res://script/character/run_run_ninja_wo_wo_shou.gd" id="1_y88vg"]
+[ext_resource type="Resource" uid="uid://b7n6cdcqkydt7" path="res://stats/ninja/ninja.tres" id="2_nryrg"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ej6yx"]
 size = Vector2(12, 10)
 
 [node name="Ninja" type="CharacterBody2D"]
+visibility_layer = 2
 collision_layer = 4
-collision_mask = 11
-script = ExtResource("1_pcrvo")
-char_stats = ExtResource("2_kvxwp")
+collision_mask = 9
+script = ExtResource("1_y88vg")
+char_stats = ExtResource("2_nryrg")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_ej6yx")
