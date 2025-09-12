@@ -1,17 +1,15 @@
-[gd_resource type="Resource" script_class="WeaponToken" load_steps=5 format=3 uid="uid://c75382k31wy2e"]
+[gd_resource type="Resource" script_class="WeaponToken" load_steps=4 format=3 uid="uid://b2ncip2srxxro"]
 
-[ext_resource type="Shape2D" uid="uid://bj77ur3k6h4mw" path="res://stats/weapon/gong/arrow_shape.tres" id="1_aynol"]
+[ext_resource type="Shape2D" uid="uid://bj77ur3k6h4mw" path="res://stats/weapon/gong/arrow_shape.tres" id="1_eg4im"]
 [ext_resource type="Script" uid="uid://fm76o636pp2" path="res://resource/weapon/weapon_related.gd" id="1_mkfqy"]
-[ext_resource type="Resource" uid="uid://do8nqwhctp3q0" path="res://stats/weapon/gong/gong.tres" id="1_nihp1"]
-[ext_resource type="Texture2D" uid="uid://crbgpqyw1j4ra" path="res://stats/weapon/gong/art/arrow.png" id="2_um6ib"]
+[ext_resource type="Texture2D" uid="uid://crbgpqyw1j4ra" path="res://stats/weapon/gong/art/arrow.png" id="2_u583y"]
 
 [resource]
 script = ExtResource("1_mkfqy")
-main_weapon = ExtResource("1_nihp1")
 attack = 0
-icon = ExtResource("2_um6ib")
-init_offset = Vector2(4, 0)
-attackshape = ExtResource("1_aynol")
+icon = ExtResource("2_u583y")
+init_offset = Vector2(0, 0)
+attackshape = ExtResource("1_eg4im")
 attackshape_offset = Vector2(0, 0)
 id = "arrow"
 metadata/_custom_type_script = "uid://fm76o636pp2"

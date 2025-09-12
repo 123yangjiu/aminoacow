@@ -8,7 +8,7 @@
 [ext_resource type="Script" uid="uid://ce0xn3ulqj3gb" path="res://script/character_related/hand.gd" id="4_w2ep0"]
 [ext_resource type="Texture2D" uid="uid://botr6ujc224gq" path="res://art/texture/character/you_hand.png" id="5_1t3kv"]
 [ext_resource type="Resource" uid="uid://bx070af8rsp8s" path="res://stats/weapon/qiang/qiang.tres" id="5_im1mn"]
-[ext_resource type="Resource" uid="uid://do8nqwhctp3q0" path="res://stats/weapon/gong/gong.tres" id="6_jd10u"]
+[ext_resource type="Resource" uid="uid://bw0pgo3qpsx50" path="res://stats/weapon/gong/gong.tres" id="6_jd10u"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_dgbgk"]
 size = Vector2(11, 9)

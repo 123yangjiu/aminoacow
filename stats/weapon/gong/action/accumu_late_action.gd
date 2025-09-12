@@ -2,7 +2,7 @@ extends WeaponAction
 @export var arrowScene : PackedScene
 
 @onready var animated_sprite_2d: AnimatedSprite2D = $AnimatedSprite2D
-
+const WEAPON_TEMPLATES = preload("res://scene/weapon/weapon_templates.tscn")
 var is_drawing := false
 
 func perform(direction:bool)->void:
@@ -21,7 +21,7 @@ func perform(direction:bool)->void:
 	
 	self.remove_child(animated_sprite_2d)
 	weapon.add_child(animated_sprite_2d)
-	var arrow := .instantiate()
+	var arrow = WEAPON_TEMPLATES.instantiate()
 	weapon.add_child(arrow)
 	
 	
