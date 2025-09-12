@@ -5,6 +5,7 @@ extends Area2D
 @onready var attack_shape: CollisionShape2D = $AttackShape
 @export var stats:WeaponStats :set = set_stats
 
+
 var action_picker:WeaponActionPicker
 
 func to_set_stats(the_stats:WeaponStats)->void:

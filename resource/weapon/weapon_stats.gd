@@ -8,3 +8,4 @@ extends Resource
 @export var attackshape_offset:Vector2
 @export var id:String
 @export var action:PackedScene
+@export var animate:SpriteFrames

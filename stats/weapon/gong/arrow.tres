@@ -2,7 +2,7 @@
 
 [ext_resource type="Shape2D" uid="uid://bj77ur3k6h4mw" path="res://stats/weapon/gong/arrow_shape.tres" id="1_eg4im"]
 [ext_resource type="Script" uid="uid://j535ep7c8mk7" path="res://resource/weapon/weapon_stats.gd" id="1_gj48g"]
-[ext_resource type="Texture2D" uid="uid://crbgpqyw1j4ra" path="res://stats/weapon/gong/arrow.png" id="2_u583y"]
+[ext_resource type="Texture2D" uid="uid://crbgpqyw1j4ra" path="res://stats/weapon/gong/art/arrow.png" id="2_u583y"]
 
 [resource]
 script = ExtResource("1_gj48g")

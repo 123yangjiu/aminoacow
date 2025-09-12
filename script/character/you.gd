@@ -129,7 +129,7 @@ func roll(bool_direction)->void:
 		await tween.finished
 		is_roll = false
 		not_roll = true
-		await get_tree().create_timer(char_stats.roll_interval).timeoutp
+		await get_tree().create_timer(char_stats.roll_interval).timeout
 		not_roll = false
 
 #other_node-related

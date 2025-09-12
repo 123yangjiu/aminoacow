@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://oy7b1drr28pn"]
 
 [ext_resource type="Script" uid="uid://d05sdjmyrl827" path="res://stats/weapon/gong/arrow_scene.gd" id="1_86e3w"]
-[ext_resource type="Texture2D" uid="uid://crbgpqyw1j4ra" path="res://stats/weapon/gong/arrow.png" id="2_86e3w"]
+[ext_resource type="Texture2D" uid="uid://crbgpqyw1j4ra" path="res://stats/weapon/gong/art/arrow.png" id="2_86e3w"]
 [ext_resource type="Shape2D" uid="uid://bj77ur3k6h4mw" path="res://stats/weapon/gong/arrow_shape.tres" id="2_nkrpt"]
 
 [node name="ArrowScene" type="Area2D"]

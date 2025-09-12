@@ -1,7 +1,7 @@
 [gd_resource type="Resource" script_class="WeaponStats" load_steps=5 format=3 uid="uid://qlvyhrebtkbx"]
 
 [ext_resource type="Texture2D" uid="uid://7al5tfpaq352" path="res://stats/weapon/jian/sword.png" id="1_3c472"]
-[ext_resource type="PackedScene" uid="uid://d2sotolildr0x" path="res://stats/weapon/jian/jian_action_picker.tscn" id="1_f366u"]
+[ext_resource type="PackedScene" uid="uid://d2sotolildr0x" path="res://stats/weapon/jian/action/jian_action_picker.tscn" id="1_f366u"]
 [ext_resource type="Shape2D" uid="uid://dydi8k4qubbbh" path="res://stats/weapon/jian/jian_shape.tres" id="2_f366u"]
 [ext_resource type="Script" uid="uid://j535ep7c8mk7" path="res://resource/weapon/weapon_stats.gd" id="3_1ob4r"]
 

@@ -20,6 +20,6 @@ func initial(new_weapon:Weapon)->void:
 		child.player = player
 
 func get_action()->WeaponAction:
-	return get_child(0)  #改这里
+	return get_child(1)  #改这里
 
 	

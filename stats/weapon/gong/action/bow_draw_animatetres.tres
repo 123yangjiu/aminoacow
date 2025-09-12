@@ -1,0 +1,46 @@
+[gd_resource type="SpriteFrames" load_steps=7 format=3 uid="uid://dv3brwk2sps76"]
+
+[ext_resource type="Texture2D" uid="uid://domlre7nvpv3r" path="res://stats/weapon/gong/art/bow_draw.png" id="1_lnjuk"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5hmlb"]
+atlas = ExtResource("1_lnjuk")
+region = Rect2(0, 0, 9, 10)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_d41tm"]
+atlas = ExtResource("1_lnjuk")
+region = Rect2(9, 0, 9, 10)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0kjuw"]
+atlas = ExtResource("1_lnjuk")
+region = Rect2(18, 0, 9, 10)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hfiw8"]
+atlas = ExtResource("1_lnjuk")
+region = Rect2(27, 0, 9, 10)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_u8v5a"]
+atlas = ExtResource("1_lnjuk")
+region = Rect2(36, 0, 9, 10)
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5hmlb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_d41tm")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0kjuw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hfiw8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_u8v5a")
+}],
+"loop": false,
+"name": &"draw",
+"speed": 10.0
+}]

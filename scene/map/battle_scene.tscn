@@ -1,10 +1,10 @@
 [gd_scene load_steps=10 format=4 uid="uid://dpfye6pgjp1ow"]
 
 [ext_resource type="PackedScene" uid="uid://cbdhuaxe66pds" path="res://scene/character/player.tscn" id="2_1ulb3"]
+[ext_resource type="Resource" uid="uid://do8nqwhctp3q0" path="res://stats/weapon/gong/gong.tres" id="3_5tjbu"]
 [ext_resource type="TileSet" uid="uid://7pkhrqjr24r7" path="res://fold_resource/main_tile_set.tres" id="3_ide23"]
 [ext_resource type="PackedScene" uid="uid://01q2kdrfohs1" path="res://scene/character/ninja.tscn" id="4_5df6j"]
 [ext_resource type="PackedScene" uid="uid://pgnprmdvj076" path="res://scene/health_stat_control.tscn" id="4_ytx2v"]
-[ext_resource type="Resource" uid="uid://bx070af8rsp8s" path="res://stats/weapon/qiang/qiang.tres" id="5_5tjbu"]
 [ext_resource type="AudioStream" uid="uid://cpt58dfecrmyb" path="res://art/Soundtracks Alex Coldfire MP3/Good Old Days.mp3" id="5_ytx2v"]
 [ext_resource type="AudioStream" uid="uid://cvacgjk01xlpt" path="res://art/othermusic/amane.mp3" id="7_5tjbu"]
 [ext_resource type="AudioStream" uid="uid://cni2d7q7aower" path="res://art/Soundtracks Alex Coldfire MP3/Distance.mp3" id="8_jvh4i"]
@@ -35,7 +35,7 @@ follow_viewport_enabled = true
 
 [node name="Player" parent="CharacterLayer" instance=ExtResource("2_1ulb3")]
 position = Vector2(46, 90)
-init_weapon = ExtResource("5_5tjbu")
+init_weapon = ExtResource("3_5tjbu")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="CharacterLayer/Player"]
 offset = Vector2(830, 50)

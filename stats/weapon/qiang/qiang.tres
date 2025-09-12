@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="WeaponStats" load_steps=5 format=3 uid="uid://bx070af8rsp8s"]
 
-[ext_resource type="PackedScene" uid="uid://kilhtitjeh87" path="res://stats/weapon/qiang/qiang_action.tscn" id="1_14cco"]
+[ext_resource type="PackedScene" uid="uid://kilhtitjeh87" path="res://stats/weapon/qiang/action/qiang_action.tscn" id="1_14cco"]
 [ext_resource type="Texture2D" uid="uid://cybcg5jbb6u47" path="res://stats/weapon/qiang/qiang.png" id="1_p4042"]
 [ext_resource type="Shape2D" uid="uid://cmkaoj4ii3vbw" path="res://stats/weapon/qiang/qiang_shape.tres" id="2_14cco"]
 [ext_resource type="Script" uid="uid://j535ep7c8mk7" path="res://resource/weapon/weapon_stats.gd" id="4_14cco"]

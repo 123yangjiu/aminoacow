@@ -5,7 +5,7 @@ var sound:AudioStream
 
 var weapon:Weapon
 var player:Player
-var player_hand:Node2D
+var player_hand:Hand
 
 @warning_ignore("unused_parameter")
 func perform(direction)->void:
