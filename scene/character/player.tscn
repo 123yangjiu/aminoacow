@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://cbdhuaxe66pds"]
+[gd_scene load_steps=13 format=3 uid="uid://cbdhuaxe66pds"]
 
 [ext_resource type="Script" uid="uid://l37rhv5wnofp" path="res://script/character/you.gd" id="1_lo04n"]
 [ext_resource type="Resource" uid="uid://ifqkik8rk25b" path="res://stats/you/you.tres" id="2_5utgv"]
@@ -13,8 +13,16 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_dgbgk"]
 size = Vector2(11, 9)
 
+[sub_resource type="Animation" id="Animation_d4d1h"]
+resource_name = "run"
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_e0121"]
+_data = {
+&"run": SubResource("Animation_d4d1h")
+}
+
 [node name="Player" type="CharacterBody2D" groups=["Player"]]
-visibility_layer = 2
+z_index = 1
 collision_layer = 2
 collision_mask = 9
 script = ExtResource("1_lo04n")
@@ -24,7 +32,22 @@ weapon_pack = Array[ExtResource("3_d4d1h")]([ExtResource("4_e0121"), ExtResource
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_dgbgk")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="Camera2D" type="Camera2D" parent="."]
+show_behind_parent = true
+offset = Vector2(0, -30)
+zoom = Vector2(4, 4)
+limit_top = -100
+limit_bottom = 200
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_e0121")
+}
+
+[node name="Ancher" type="Node2D" parent="."]
+
+[node name="Sprite2D" type="Sprite2D" parent="Ancher"]
+unique_name_in_owner = true
 texture = ExtResource("3_rrjs7")
 
 [node name="Hand" type="Node2D" parent="."]
@@ -32,11 +55,14 @@ unique_name_in_owner = true
 position = Vector2(2.5, 0)
 script = ExtResource("4_w2ep0")
 
-[node name="Hand_sprite" type="Sprite2D" parent="Hand"]
+[node name="HandLeft" type="Sprite2D" parent="Hand"]
+position = Vector2(-3, 0.5)
 texture = ExtResource("5_1t3kv")
+region_enabled = true
+region_rect = Rect2(4, 4, 2, 2)
 
-[node name="Camera2D" type="Camera2D" parent="."]
-offset = Vector2(0, -30)
-zoom = Vector2(4, 4)
-limit_top = -100
-limit_bottom = 200
+[node name="HandRight" type="Sprite2D" parent="Hand"]
+position = Vector2(2, 0.5)
+texture = ExtResource("5_1t3kv")
+region_enabled = true
+region_rect = Rect2(9, 4, 2, 2)

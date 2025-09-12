@@ -48,9 +48,6 @@ exchange_weapon={
 
 [layer_names]
 
-2d_render/layer_1="back"
-2d_render/layer_2="main"
-2d_render/layer_3="ceiling"
 2d_physics/layer_1="tile"
 2d_physics/layer_2="player"
 2d_physics/layer_3="enemy"

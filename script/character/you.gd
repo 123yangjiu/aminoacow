@@ -4,20 +4,28 @@ extends CharacterBody2D
 @export var char_stats:CharacterStats
 
 #node-related
-@onready var sprite_2d: Sprite2D = $Sprite2D
+@onready var sprite_2d: Sprite2D = %Sprite2D
 @onready var hand: Hand = %Hand
+@onready var camera_2d: Camera2D = $Camera2D
+@onready var ancher: Node2D = $Ancher
+
 const WEAPON_CONTAINER = preload("res://scene/weapon/weapon_container.tscn")
 var weapon_container:WeaponContainer
+const EXCHANGE_WEAPON_EFFECT = preload("res://scene/effect/exchange_weapon_effect.tscn")
+@export var exchange_weapon_effect:ExchangeWeaponEffect
 
 #char_stats_variable-related
 @onready var art:Texture2D = char_stats.art
+@onready var hand_art:Texture2D = hand.get_child(0).texture
 @onready var init_image:Image = art.get_image()
+@onready var hand_init_image:Image = hand_art.get_image()
 @onready var SPEED = char_stats.speed
 @onready var JUMP_VELOCITY:float = char_stats.jump_speed
 @export var weapon_pack:Array[WeaponStats]
 @export var init_weapon:WeaponStats
 @onready var current_weapon: Weapon
-#node-related
+
+#self-related
 	#action
 var direction_bool:bool=true :set = set_direction
 var acceleration:int = 600
@@ -27,7 +35,11 @@ var is_action:bool=false
 var is_flip:bool = false
 var is_roll:bool = false
 var is_exchange:bool = false
+var is_up_down_pressed
+	#not_doing
 var not_exchange := false
+var not_roll := false
+
 
 func _ready() -> void:
 	#初始化Stats
@@ -79,6 +91,7 @@ func smooth_move(direction)->void:
 		return
 	if direction:
 		velocity.x = move_toward(velocity.x,direction * SPEED,acceleration)
+		ancher.rotation_degrees = lerp(ancher.rotation_degrees,direction*8,0.1)
 		if is_action:
 			return
 		if direction>0:
@@ -104,6 +117,8 @@ func attack(bool_direction)->void:
 	if Input.is_action_just_pressed("attack") and ! is_action and ! is_flip and ! is_roll:
 		current_weapon.attack(bool_direction)
 func roll(bool_direction)->void:
+	if not_roll:
+		return
 	if Input.is_action_just_pressed("roll") and ! is_action and !is_roll:
 		is_roll = true
 		var dir := 1 if bool_direction else -1
@@ -113,35 +128,63 @@ func roll(bool_direction)->void:
 		tween.tween_property(self,"rotation_degrees",360*dir,0.2)
 		await tween.finished
 		is_roll = false
+		not_roll = true
+		await get_tree().create_timer(char_stats.roll_interval).timeoutp
+		not_roll = false
 
 #other_node-related
 func exchange_weapon(bool_direction)->void:
 	if not_exchange:
 		return
-	var dir := 1 if bool_direction else -1
-	if !weapon_container:
-		weapon_container = WEAPON_CONTAINER.instantiate()
-		add_child(weapon_container)
-		weapon_container.position = Vector2(14,0) * dir
 	if Input.is_action_pressed("exchange_weapon") or is_exchange and weapon_container:
+		var dir := 1 if bool_direction else -1
+		#添加weapon_container和effect
+		if !weapon_container:
+			weapon_container = WEAPON_CONTAINER.instantiate()
+			add_child(weapon_container)
+			weapon_container.position = Vector2(14,0) * dir
+		if !exchange_weapon_effect:
+			exchange_weapon_effect = EXCHANGE_WEAPON_EFFECT.instantiate()
+			camera_2d.add_child(exchange_weapon_effect)
+		#现身
 		is_exchange = true
 		var tween:=create_tween().set_trans(Tween.TRANS_EXPO)
 		weapon_container.update(weapon_pack[0].icon,weapon_pack[1].icon)
-		tween.tween_property(weapon_container,"modulate",Color(1,1,1,1),0.05)
+		tween.tween_property(weapon_container,"modulate",Color(1,1,1,1),0.01)
+		tween.parallel().tween_property(exchange_weapon_effect,"color",Color(0.1,0.1,0.1,0.7),0.01)
+		Engine.time_scale = 0.2  
 		var later_weapon = current_weapon
 		var up_down_index = null
-		if Input.is_action_just_released("ui_up"):
-			up_down_index =0
-		elif Input.is_action_just_released("ui_down"):
+		match is_up_down_pressed:
+			null:
+				if Input.is_action_pressed("ui_down"):
+					weapon_container.add_shader(false)
+					is_up_down_pressed = "down"
+				elif Input.is_action_pressed("ui_up"):
+					weapon_container.add_shader(true)
+					is_up_down_pressed = "up"
+			"down":
+				if Input.is_action_pressed("ui_up"):
+					weapon_container.add_shader(true)
+					is_up_down_pressed = "upup"
+			"up":
+				if Input.is_action_pressed("ui_down"):
+					weapon_container.add_shader(false)
+					is_up_down_pressed = "downdown"
+		if Input.is_action_just_released("ui_up") or Input.is_action_just_released("ui_down"):
 			up_down_index = -1
+			match is_up_down_pressed:
+				"down","downdown":
+					up_down_index = 1
+				"up","upup":
+					up_down_index = 0
+		
 		if up_down_index != null:
 			current_weapon.queue_free()
 			hand.add_weapon(weapon_pack[up_down_index])
 			weapon_pack[up_down_index] = later_weapon.stats
-			tween.tween_property(weapon_container,"modulate",Color(1,1,1,0),0.03)
-			await tween.finished
-			weapon_container.queue_free()
-			is_exchange = false
+			#tween.tween_property(weapon_container,"modulate",Color(1,1,1,0),0.03)
+			exchange_over()
 			not_exchange = true
 			await get_tree().create_timer(2).timeout
 			not_exchange = false
@@ -149,12 +192,19 @@ func exchange_weapon(bool_direction)->void:
 		if Input.is_action_just_released("exchange_weapon"):
 			tween.tween_property(weapon_container,"modulate",Color(1,1,1,0),0.03)
 			await tween.finished
-			weapon_container.queue_free()
-			is_exchange = false
-			
+			exchange_over()
+
+func exchange_over()->void:
+	weapon_container.queue_free()
+	exchange_weapon_effect.queue_free()
+	Engine.time_scale = 1.0
+	is_exchange = false
+	is_up_down_pressed = null
+	weapon_container.delete_shader()
 
 func image_change()->void:
 	var image:Image = art.get_image()
+	var hand_image:Image = hand_art.get_image()
 	var height = image.get_height()
 	var width = image.get_width()
 	#health_mode作为指标
@@ -162,8 +212,13 @@ func image_change()->void:
 	for y in range(ceil(n)):
 		for x in range(width):
 			var ori_color:Color = image.get_pixel(x,y)
+			var ori_hand_color := hand_image.get_pixel(x,y)
 			if ori_color == Color.WHITE:
-					image.set_pixel(x,y,Color.BLACK)
-			if ori_color == Color.BLACK:
+				image.set_pixel(x,y,Color.BLACK)
+			elif ori_color == Color.BLACK:
 				image.set_pixel(x,y,Color.WHITE)
+			if ori_hand_color == Color.WHITE:
+				hand_image.set_pixel(x,y,Color.BLACK)
+			elif ori_hand_color == Color.BLACK:
+				hand_image.set_pixel(x,y,Color.WHITE)
 	sprite_2d.texture = ImageTexture.create_from_image(image)

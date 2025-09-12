@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=4 uid="uid://dpfye6pgjp1ow"]
+[gd_scene load_steps=10 format=4 uid="uid://dpfye6pgjp1ow"]
 
 [ext_resource type="Script" uid="uid://bt2xnln8fj5nl" path="res://scene/map/battle_scene.gd" id="1_5tjbu"]
 [ext_resource type="PackedScene" uid="uid://cbdhuaxe66pds" path="res://scene/character/player.tscn" id="2_1ulb3"]
@@ -8,8 +8,16 @@
 [ext_resource type="PackedScene" uid="uid://pgnprmdvj076" path="res://scene/health_stat_control.tscn" id="4_ytx2v"]
 [ext_resource type="Resource" uid="uid://bx070af8rsp8s" path="res://stats/weapon/qiang/qiang.tres" id="5_5tjbu"]
 [ext_resource type="AudioStream" uid="uid://cpt58dfecrmyb" path="res://art/Soundtracks Alex Coldfire MP3/Good Old Days.mp3" id="5_ytx2v"]
-[ext_resource type="PackedScene" uid="uid://iwei07sxjy4l" path="res://scene/enemy_generator.tscn" id="8_uhd7g"]
-[ext_resource type="PackedScene" uid="uid://cq073cs0ot5yu" path="res://scene/character/run_run_ninja_wo_wo_shou.tscn" id="9_uhd7g"]
+
+[ext_resource type="AudioStream" uid="uid://cvacgjk01xlpt" path="res://art/othermusic/amane.mp3" id="7_5tjbu"]
+[ext_resource type="AudioStream" uid="uid://cni2d7q7aower" path="res://art/Soundtracks Alex Coldfire MP3/Distance.mp3" id="8_jvh4i"]
+
+[sub_resource type="AudioStreamPlaylist" id="AudioStreamPlaylist_uhd7g"]
+shuffle = true
+stream_count = 3
+stream_0 = ExtResource("5_ytx2v")
+stream_1 = ExtResource("7_5tjbu")
+stream_2 = ExtResource("8_jvh4i")
 
 [node name="BattleScene" type="Node2D"]
 script = ExtResource("1_5tjbu")
@@ -39,6 +47,7 @@ offset = Vector2(830, 50)
 transform = Transform2D(1, 0, 0, 1, 830, 50)
 
 [node name="HealthStatControl" parent="CharacterLayer/Player/CanvasLayer" instance=ExtResource("4_ytx2v")]
+visible = false
 offset_left = 39.0
 offset_top = -3.0
 offset_right = 79.0
@@ -52,6 +61,6 @@ collision_mask = 9
 enemy_list = Array[PackedScene]([ExtResource("9_uhd7g")])
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("5_ytx2v")
+stream = SubResource("AudioStreamPlaylist_uhd7g")
 autoplay = true
 parameters/looping = true

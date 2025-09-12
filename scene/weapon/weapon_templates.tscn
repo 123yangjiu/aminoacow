@@ -6,7 +6,6 @@
 [ext_resource type="Shape2D" uid="uid://cmkaoj4ii3vbw" path="res://stats/weapon/qiang/qiang_shape.tres" id="4_igf1b"]
 
 [node name="Name" type="Area2D"]
-visibility_layer = 2
 collision_layer = 8
 collision_mask = 4
 priority = 2
