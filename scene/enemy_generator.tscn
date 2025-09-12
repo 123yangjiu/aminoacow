@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://iwei07sxjy4l"]
+
+[ext_resource type="Script" uid="uid://cw3ynrk2jdkxr" path="res://script/character_related/enemy_generator.gd" id="1_p3xjd"]
+[ext_resource type="PackedScene" uid="uid://cq073cs0ot5yu" path="res://scene/character/run_run_ninja_wo_wo_shou.tscn" id="2_sfgpa"]
+
+[node name="EnemyGenerator" type="Node"]
+script = ExtResource("1_p3xjd")
+enemy_spawn_rate = 10
+enemy_list = Array[PackedScene]([ExtResource("2_sfgpa")])
+enemy_generation_rate = Array[int]([10])
+
+[node name="GenerationTick" type="Timer" parent="."]
+wait_time = 0.1
+autostart = true
