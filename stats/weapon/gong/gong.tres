@@ -10,7 +10,7 @@
 script = ExtResource("3_xpq1d")
 attack = 5
 icon = ExtResource("4_fay26")
-init_offset = Vector2(4.5, 0)
+init_offset = Vector2(2, 0)
 attackshape = ExtResource("2_8blvv")
 attackshape_offset = Vector2(0, 0)
 id = "gong"

@@ -1,23 +1,20 @@
-[gd_scene load_steps=6 format=3 uid="uid://ccya7yy3bgeya"]
+[gd_scene load_steps=7 format=3 uid="uid://ccya7yy3bgeya"]
 
 [ext_resource type="Script" uid="uid://dhujs6oxeio5j" path="res://scene/action/action_picker.gd" id="1_swy23"]
 [ext_resource type="Script" uid="uid://c5eh774psa7b2" path="res://stats/weapon/gong/action/bow_shot.gd" id="2_08m66"]
 [ext_resource type="PackedScene" uid="uid://oy7b1drr28pn" path="res://stats/weapon/gong/arrow_scene.tscn" id="3_5hmlb"]
 [ext_resource type="Script" uid="uid://cykhroguxkv0t" path="res://stats/weapon/gong/action/accumu_late_action.gd" id="4_d41tm"]
+[ext_resource type="Resource" uid="uid://b2ncip2srxxro" path="res://stats/weapon/gong/arrow.tres" id="5_5hmlb"]
 [ext_resource type="SpriteFrames" uid="uid://dv3brwk2sps76" path="res://stats/weapon/gong/action/bow_draw_animatetres.tres" id="5_08m66"]
 
 [node name="BowAndArrow" type="Node"]
 script = ExtResource("1_swy23")
 metadata/_custom_type_script = "uid://dhujs6oxeio5j"
 
-[node name="WeaponAction" type="Node" parent="."]
-script = ExtResource("2_08m66")
-arrowScene = ExtResource("3_5hmlb")
-metadata/_custom_type_script = "uid://cuofx382xfv2x"
-
 [node name="AccumuLate" type="Node" parent="."]
 script = ExtResource("4_d41tm")
 arrowScene = ExtResource("3_5hmlb")
+weapon_token = ExtResource("5_5hmlb")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="AccumuLate"]
 visible = false
@@ -25,3 +22,8 @@ sprite_frames = ExtResource("5_08m66")
 animation = &"draw"
 frame = 4
 frame_progress = 1.0
+
+[node name="WeaponAction" type="Node" parent="."]
+script = ExtResource("2_08m66")
+arrowScene = ExtResource("3_5hmlb")
+metadata/_custom_type_script = "uid://cuofx382xfv2x"

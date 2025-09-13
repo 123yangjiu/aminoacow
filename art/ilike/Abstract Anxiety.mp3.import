@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://cmu618pwll4c0"
+path="res://.godot/imported/Abstract Anxiety.mp3-1f93c5ad11de0876cd3f83db44060e24.mp3str"
+
+[deps]
+
+source_file="res://art/ilike/Abstract Anxiety.mp3"
+dest_files=["res://.godot/imported/Abstract Anxiety.mp3-1f93c5ad11de0876cd3f83db44060e24.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

@@ -1,22 +1,30 @@
-[gd_scene load_steps=12 format=4 uid="uid://dpfye6pgjp1ow"]
+[gd_scene load_steps=16 format=4 uid="uid://dpfye6pgjp1ow"]
 
 [ext_resource type="Script" uid="uid://bt2xnln8fj5nl" path="res://scene/map/battle_scene.gd" id="1_5tjbu"]
 [ext_resource type="PackedScene" uid="uid://cbdhuaxe66pds" path="res://scene/character/player.tscn" id="2_1ulb3"]
-[ext_resource type="Resource" uid="uid://do8nqwhctp3q0" path="res://stats/weapon/gong/gong.tres" id="3_5tjbu"]
+[ext_resource type="Resource" uid="uid://bw0pgo3qpsx50" path="res://stats/weapon/gong/gong.tres" id="3_5tjbu"]
 [ext_resource type="TileSet" uid="uid://7pkhrqjr24r7" path="res://fold_resource/main_tile_set.tres" id="3_ide23"]
 [ext_resource type="PackedScene" uid="uid://01q2kdrfohs1" path="res://scene/character/ninja.tscn" id="4_5df6j"]
 [ext_resource type="PackedScene" uid="uid://pgnprmdvj076" path="res://scene/health_stat_control.tscn" id="4_ytx2v"]
 [ext_resource type="AudioStream" uid="uid://cpt58dfecrmyb" path="res://art/Soundtracks Alex Coldfire MP3/Good Old Days.mp3" id="5_ytx2v"]
 [ext_resource type="PackedScene" uid="uid://iwei07sxjy4l" path="res://scene/enemy_generator.tscn" id="6_jvh4i"]
-[ext_resource type="AudioStream" uid="uid://cvacgjk01xlpt" path="res://art/othermusic/amane.mp3" id="7_5tjbu"]
+[ext_resource type="AudioStream" uid="uid://cvacgjk01xlpt" path="res://art/ilike/amane.mp3" id="7_5tjbu"]
 [ext_resource type="AudioStream" uid="uid://cni2d7q7aower" path="res://art/Soundtracks Alex Coldfire MP3/Distance.mp3" id="8_jvh4i"]
+[ext_resource type="AudioStream" uid="uid://y824mpobdmij" path="res://art/ilike/Battle Ready.mp3" id="11_44nki"]
+[ext_resource type="AudioStream" uid="uid://cmu618pwll4c0" path="res://art/ilike/Abstract Anxiety.mp3" id="12_mpqk6"]
+[ext_resource type="AudioStream" uid="uid://dbmfxd76bknvt" path="res://art/ilike/Downtown Boogie.mp3" id="13_nqrgj"]
+[ext_resource type="AudioStream" uid="uid://6grxrp60hchl" path="res://art/ilike/I Guess What I'm Trying to Say.mp3" id="14_2i63n"]
 
 [sub_resource type="AudioStreamPlaylist" id="AudioStreamPlaylist_uhd7g"]
 shuffle = true
-stream_count = 3
+stream_count = 7
 stream_0 = ExtResource("5_ytx2v")
 stream_1 = ExtResource("7_5tjbu")
 stream_2 = ExtResource("8_jvh4i")
+stream_3 = ExtResource("11_44nki")
+stream_4 = ExtResource("12_mpqk6")
+stream_5 = ExtResource("13_nqrgj")
+stream_6 = ExtResource("14_2i63n")
 
 [node name="BattleScene" type="Node2D"]
 script = ExtResource("1_5tjbu")

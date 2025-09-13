@@ -5,6 +5,7 @@ var all_action:Array[Node]
 var weapon:Weapon
 var player_hand:Node2D
 var player:CharacterBody2D
+var have_released:bool
 
 func initial(new_weapon:Weapon)->void:
 	if ! is_inside_tree():
@@ -20,6 +21,4 @@ func initial(new_weapon:Weapon)->void:
 		child.player = player
 
 func get_action()->WeaponAction:
-	return get_child(1)  #改这里
-
-	
+	return get_child(0)  #改这里

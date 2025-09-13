@@ -32,6 +32,7 @@ var acceleration:int = 600
 var friction:int = 1000
 	#is_doing
 var is_action:bool=false
+var ready_action:WeaponAction
 var is_flip:bool = false
 var is_roll:bool = false
 var is_exchange:bool = false
@@ -39,6 +40,7 @@ var is_up_down_pressed
 	#not_doing
 var not_exchange := false
 var not_roll := false
+var not_attack:= false
 
 
 func _ready() -> void:
@@ -63,6 +65,7 @@ func _physics_process(delta: float) -> void:
 	move_and_slide()
 	#other_input-related
 	attack(direction_bool)
+	release()
 	exchange_weapon(direction_bool)
 
 #set_stats-related
@@ -114,8 +117,19 @@ func flip_hand(direction)->void:
 	#tween.parallel().tween_property(current_weapon,"rotation_degrees",180,0.1)
 	#tween.tween_property(hand,"rotation_degrees",0,0.1)
 func attack(bool_direction)->void:
+	if not_attack:
+		return
 	if Input.is_action_just_pressed("attack") and ! is_action and ! is_flip and ! is_roll:
-		current_weapon.attack(bool_direction)
+		ready_action= current_weapon.action_picker.get_action()
+		ready_action.perform(bool_direction)
+func release()->void:
+	if not_attack:
+		return
+	if ! ready_action or ! ready_action.have_release():
+		return
+	if Input.is_action_just_released("attack"):
+		ready_action.release(direction_bool)
+		pass
 func roll(bool_direction)->void:
 	if not_roll:
 		return

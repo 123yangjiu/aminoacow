@@ -6,9 +6,9 @@
 
 [resource]
 script = ExtResource("1_mkfqy")
-attack = 0
+attack = 5
 icon = ExtResource("2_u583y")
-init_offset = Vector2(0, 0)
+init_offset = Vector2(3, 0)
 attackshape = ExtResource("1_eg4im")
 attackshape_offset = Vector2(0, 0)
 id = "arrow"
