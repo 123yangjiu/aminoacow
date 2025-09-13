@@ -14,6 +14,7 @@ func perform(direction:bool)->void:
 	var hand_string = player_hand.hand_left #if direction else player_hand.hand_right
 	var hand_string_start = hand_string.position
 	player.SPEED *= 0.5
+	player.JUMP_VELOCITY *= 0.8
 	player.is_action = true
 	weapon.icon.visible = false
 	animated_sprite_2d.visible = true
