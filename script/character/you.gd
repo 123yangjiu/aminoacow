@@ -58,6 +58,7 @@ func _physics_process(delta: float) -> void:
 	#move-related
 	add_gravity(delta)
 	var direction := Input.get_axis("ui_left", "ui_right")
+	print(direction)
 	jump()
 	smooth_move(direction)
 	roll(direction_bool)

@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://01q2kdrfohs1"]
 
-[ext_resource type="Texture2D" uid="uid://xxvmh32jrd38" path="res://art/texture/character/ninja_black.png" id="1_ej6yx"]
+[ext_resource type="Texture2D" uid="uid://ho3nxid2hkvp" path="res://test/art/character/ninja_black.png" id="1_ej6yx"]
 [ext_resource type="Script" uid="uid://b4kynp24xn4gm" path="res://script/character/ninja.gd" id="1_pcrvo"]
 [ext_resource type="Resource" uid="uid://b7n6cdcqkydt7" path="res://stats/ninja/ninja.tres" id="2_kvxwp"]
 

@@ -78,6 +78,7 @@ func release(_direction)->void:
 	animated_sprite_2d.visible = false
 	player.is_action = false
 	player.not_attack = true
-	await get_tree().create_timer(0.5).timeout
+	await get_tree().create_timer(0.5
+	).timeout
 	player.not_attack = false
 	

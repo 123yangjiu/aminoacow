@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://dtkbrwoinjb8o"]
+
+[ext_resource type="Script" uid="uid://cnep32pw17glg" path="res://test/weapon/action/action_picker.gd" id="1_ch0nx"]
+[ext_resource type="PackedScene" uid="uid://c3163atjrsu4h" path="res://test/weapon/action/qiang_action.tscn" id="2_7aft7"]
+
+[node name="ActionPicker" type="Node"]
+script = ExtResource("1_ch0nx")
+
+[node name="NormalAction" type="Node" parent="."]
+
+[node name="QiangAction" parent="NormalAction" instance=ExtResource("2_7aft7")]
+
+[node name="ExchangeAction" type="Node" parent="."]

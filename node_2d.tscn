@@ -1,0 +1,14 @@
+[gd_scene load_steps=4 format=3 uid="uid://qt1vhyvmihnx"]
+
+[ext_resource type="Script" uid="uid://dil5ushuibs8n" path="res://node_2d.gd" id="1_wtcfe"]
+[ext_resource type="Texture2D" uid="uid://cjyr1lehb7mvi" path="res://icon.svg" id="2_0e48y"]
+[ext_resource type="PackedScene" uid="uid://s2n3is05nce4" path="res://test/commend/tween_commend/tween_commend.tscn" id="3_epypp"]
+
+[node name="Node2D" type="Node2D"]
+script = ExtResource("1_wtcfe")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_0e48y")
+
+[node name="tween_commend" parent="." node_paths=PackedStringArray("_owner") instance=ExtResource("3_epypp")]
+_owner = NodePath("..")

@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://s2n3is05nce4"]
+
+[ext_resource type="Script" uid="uid://cx5kntcxmty5t" path="res://test/commend/tween_commend/tween_commend.gd" id="1_orwfg"]
+
+[node name="tween_commend" type="Node" node_paths=PackedStringArray("_owner")]
+script = ExtResource("1_orwfg")
+_owner = NodePath("")

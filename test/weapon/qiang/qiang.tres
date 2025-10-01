@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="NewWeaponStatus" load_steps=5 format=3 uid="uid://bone2ofdfk761"]
+
+[ext_resource type="Shape2D" uid="uid://cmkaoj4ii3vbw" path="res://stats/weapon/qiang/qiang_shape.tres" id="1_b5oji"]
+[ext_resource type="Script" uid="uid://bdu6y5vdg1tdw" path="res://test/resource/new_weapon_status.gd" id="1_e76vt"]
+[ext_resource type="PackedScene" uid="uid://c3163atjrsu4h" path="res://test/weapon/action/qiang_action.tscn" id="2_4b6wx"]
+[ext_resource type="Texture2D" uid="uid://cybcg5jbb6u47" path="res://stats/weapon/qiang/qiang.png" id="3_4b6wx"]
+
+[resource]
+script = ExtResource("1_e76vt")
+name = 2
+texture = ExtResource("3_4b6wx")
+init_offset = Vector2(6, 1)
+attackshape = ExtResource("1_b5oji")
+attackshape_offset = Vector2(4, 0)
+normal_action = ExtResource("2_4b6wx")
+metadata/_custom_type_script = "uid://bdu6y5vdg1tdw"

@@ -1,0 +1,103 @@
+[gd_scene load_steps=15 format=3 uid="uid://m0xb4jacwcpl"]
+
+[ext_resource type="Script" uid="uid://b3d6y7ru46qov" path="res://test/character/player/player.gd" id="1_wvbbu"]
+[ext_resource type="Shader" uid="uid://4ftor8t3muj6" path="res://test/commend/health_commend/health_image.gdshader" id="1_yflpm"]
+[ext_resource type="Texture2D" uid="uid://b8d0gpcfuedg" path="res://test/art/character/you_nohand.png" id="3_0t4de"]
+[ext_resource type="Texture2D" uid="uid://bt5mdm4x8exh3" path="res://test/art/character_related/you_hand_left.png" id="4_jbp6r"]
+[ext_resource type="Texture2D" uid="uid://7mcgl8qpryg5" path="res://test/art/character_related/you_hand_right.png" id="5_0t4de"]
+[ext_resource type="PackedScene" uid="uid://d03cms0whrps4" path="res://test/commend/health_commend/health_commend.tscn" id="6_0t4de"]
+[ext_resource type="PackedScene" uid="uid://4iby6oili3lx" path="res://test/new_weapon.tscn" id="6_igf08"]
+[ext_resource type="Resource" uid="uid://bone2ofdfk761" path="res://test/weapon/qiang/qiang.tres" id="7_lqln8"]
+[ext_resource type="PackedScene" uid="uid://s2n3is05nce4" path="res://test/commend/tween_commend/tween_commend.tscn" id="9_v3rst"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_56kpk"]
+size = Vector2(10, 9)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_yflpm"]
+shader = ExtResource("1_yflpm")
+shader_parameter/change_color = Color(0, 0, 0, 1)
+shader_parameter/health_range = 1.0
+
+[sub_resource type="Gradient" id="Gradient_wvbbu"]
+offsets = PackedFloat32Array(0)
+colors = PackedColorArray(1, 1, 1, 1)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_wvbbu"]
+frequency = 0.001
+fractal_type = 3
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_jp3oe"]
+width = 1
+height = 2
+generate_mipmaps = false
+noise = SubResource("FastNoiseLite_wvbbu")
+color_ramp = SubResource("Gradient_wvbbu")
+
+[node name="NewPlayer" type="CharacterBody2D" node_paths=PackedStringArray("all_commend")]
+collision_layer = 2
+script = ExtResource("1_wvbbu")
+all_commend = [NodePath("all_commend/health_commend"), NodePath("all_commend/tween_commend")]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -0.5)
+shape = SubResource("RectangleShape2D_56kpk")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(4, 4)
+limit_smoothed = true
+position_smoothing_speed = 10.0
+
+[node name="Anchor" type="Node2D" parent="."]
+
+[node name="Mainsprite2D" type="Sprite2D" parent="Anchor"]
+material = SubResource("ShaderMaterial_yflpm")
+texture = ExtResource("3_0t4de")
+region_rect = Rect2(3, 3, 11, 9)
+
+[node name="HandAnchor" type="Node2D" parent="Anchor/Mainsprite2D"]
+use_parent_material = true
+position = Vector2(2.5, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="Anchor/Mainsprite2D/HandAnchor"]
+use_parent_material = true
+position = Vector2(-3, 0.5)
+texture = ExtResource("4_jbp6r")
+region_rect = Rect2(0, 0, 7, 8)
+
+[node name="Sprite2D2" type="Sprite2D" parent="Anchor/Mainsprite2D/HandAnchor"]
+use_parent_material = true
+position = Vector2(2, 0.5)
+texture = ExtResource("5_0t4de")
+region_rect = Rect2(9, 4, 2, 2)
+
+[node name="Weapon" parent="Anchor/Mainsprite2D/HandAnchor" node_paths=PackedStringArray("hand") instance=ExtResource("6_igf08")]
+monitoring = false
+status = ExtResource("7_lqln8")
+hand = NodePath("..")
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="."]
+position = Vector2(-0.5, 5)
+emitting = false
+amount = 4
+texture = SubResource("NoiseTexture2D_jp3oe")
+lifetime = 0.5
+preprocess = 0.5
+randomness = 1.0
+emission_shape = 3
+emission_rect_extents = Vector2(3, 1)
+gravity = Vector2(0, -10)
+initial_velocity_min = 10.0
+initial_velocity_max = 10.0
+radial_accel_min = 5.0
+radial_accel_max = 5.0
+angle_max = 180.0
+
+[node name="all_commend" type="Node" parent="."]
+
+[node name="health_commend" parent="all_commend" node_paths=PackedStringArray("_owner", "shader_owner") instance=ExtResource("6_0t4de")]
+max_health = 100
+_owner = NodePath("../..")
+shader_owner = NodePath("../../Anchor/Mainsprite2D")
+
+[node name="tween_commend" parent="all_commend" node_paths=PackedStringArray("_owner") instance=ExtResource("9_v3rst")]
+_owner = NodePath("../..")

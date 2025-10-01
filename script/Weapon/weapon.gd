@@ -28,6 +28,10 @@ func attack(direction)->void:
 	var ready_action = action_picker.get_action()
 	ready_action.perform(direction)
 
+#func x_action()->void:
+	#var ready_action = action_picker.get_action()
+	#ready_action.perform(direction)
+
 func _on_body_shape_entered(_body_rid: RID, body: Node2D, _body_shape_index: int, _local_shape_index: int) -> void:
 	if body is Ninja:
 		body.char_stats.take_damage(stats.attack)

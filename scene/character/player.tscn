@@ -1,14 +1,15 @@
-[gd_scene load_steps=13 format=3 uid="uid://cbdhuaxe66pds"]
+[gd_scene load_steps=14 format=3 uid="uid://cbdhuaxe66pds"]
 
 [ext_resource type="Script" uid="uid://l37rhv5wnofp" path="res://script/character/you.gd" id="1_lo04n"]
 [ext_resource type="Resource" uid="uid://ifqkik8rk25b" path="res://stats/you/you.tres" id="2_5utgv"]
 [ext_resource type="Script" uid="uid://j535ep7c8mk7" path="res://resource/weapon/weapon_stats.gd" id="3_d4d1h"]
-[ext_resource type="Texture2D" uid="uid://b8d0gpcfuedg" path="res://art/texture/character/you_nohand.png" id="3_rrjs7"]
+[ext_resource type="Texture2D" uid="uid://b8d0gpcfuedg" path="res://test/art/character/you_nohand.png" id="3_rrjs7"]
 [ext_resource type="Resource" uid="uid://qlvyhrebtkbx" path="res://stats/weapon/jian/jian.tres" id="4_e0121"]
 [ext_resource type="Script" uid="uid://ce0xn3ulqj3gb" path="res://script/character_related/hand.gd" id="4_w2ep0"]
 [ext_resource type="Texture2D" uid="uid://botr6ujc224gq" path="res://art/texture/character/you_hand.png" id="5_1t3kv"]
 [ext_resource type="Resource" uid="uid://bx070af8rsp8s" path="res://stats/weapon/qiang/qiang.tres" id="5_im1mn"]
 [ext_resource type="Resource" uid="uid://bw0pgo3qpsx50" path="res://stats/weapon/gong/gong.tres" id="6_jd10u"]
+[ext_resource type="Script" uid="uid://d1ly6rfd1be0g" path="res://scene/character/player_input_recipient.gd" id="11_im1mn"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_dgbgk"]
 size = Vector2(11, 9)
@@ -66,3 +67,6 @@ position = Vector2(2, 0.5)
 texture = ExtResource("5_1t3kv")
 region_enabled = true
 region_rect = Rect2(9, 4, 2, 2)
+
+[node name="Node" type="Node" parent="."]
+script = ExtResource("11_im1mn")
