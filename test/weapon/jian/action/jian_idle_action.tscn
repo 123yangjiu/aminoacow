@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://bexmtenaht88b"]
+
+[ext_resource type="Script" uid="uid://04pdhoaqqg37" path="res://test/weapon/jian/action/jian_idle_action.gd" id="1_r6jfy"]
+
+[node name="JianIdleAction" type="Node"]
+script = ExtResource("1_r6jfy")

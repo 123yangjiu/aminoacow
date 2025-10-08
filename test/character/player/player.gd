@@ -7,25 +7,30 @@ enum TWEEN_TYPE{
 	flip,
 	roll,
 	jump,
-	free_fall
+	free_fall,
+	bounce,
+	land_slow,
+	land_quick,
 }
-	
+
+#const NEW_WEAPON = preload("uid://4iby6oili3lx")
+@export var init_weapon:NewWeaponStatus
 
 
-const NEW_WEAPON = preload("uid://4iby6oili3lx")
 #all_commend
 @onready var health_commend: HealthCommend = $all_commend/health_commend
 @onready var tween_commend: TweenCommend = $all_commend/tween_commend
-
 
 #child_node-related
 @onready var anchor: Node2D = $Anchor
 @onready var hand_anchor: Node2D = $Anchor/Mainsprite2D/HandAnchor
 @onready var camera_2d: Camera2D = $Camera2D
 @onready var cpu_particles_2d: CPUParticles2D = $CPUParticles2D
-@export var all_commend:Array[Node]
 @onready var mainsprite_2d: Sprite2D = $Anchor/Mainsprite2D
+@onready var left_hand: Sprite2D = $Anchor/Mainsprite2D/HandAnchor/LeftHand
+@onready var right_hand: Sprite2D = $Anchor/Mainsprite2D/HandAnchor/RightHand
 @onready var weapon: NewWeapon = $Anchor/Mainsprite2D/HandAnchor/Weapon
+@export var all_commend:Array[Node]
 
 #physice_input-related
 var direction := 1.0 :set = set_direction
@@ -37,15 +42,26 @@ var bend_range := 10
 	#jump
 var _is_on_floor:bool :set = set_on_floor
 var jump_speed := -380
-var jump_scale := 1.2
-var gravity_mag := 1.9
+var jump_a_speed := 200
+	#gravity
+var no_gravity_slow_down := 1.9
 var max_down_speed := 600
+var is_bounce:=false
+var the_down_speed = 350
 var is_down_speed:=false
 signal direction_change(direction)
 	#roll
 var roll_speed := 400
 var roll_sd_speed :=100
 var roll_interval := 0.3
+	#idle
+var idle_time:=3
+var current_time =0
+var left_time=0
+var right_time=0
+var nomotion_time=0
+signal idled(who:NewPlayer)
+signal cancel_idle(who:NewPlayer)
 
 #other_physics-related
 var camera_flip_offest_x :=5
@@ -64,15 +80,19 @@ var no_bend:Array
 var no_direction:Array
 var no_shake:Array
 var no_bend_back:Array
-
+var no_idle:Array
+var no_down_tween:Array
 
 func _ready() -> void:
-	weapon._init_status()
+	if init_weapon:
+		weapon._init_status(init_weapon)
+	if ! idled.is_connected(weapon.on_idled):
+		idled.connect(weapon.on_idled)
+	if !cancel_idle.is_connected(weapon.on_cancel_idle):
+		cancel_idle.connect(weapon.on_cancel_idle)
 	await get_tree().create_timer(1).timeout
 	#血量模块测试
-	#var all_commend_array:Array =  self.all_commend.get_children()
-	#for i:HealthCommend in all_commend_array:
-		#i.take_damage(1)
+	health_commend.take_damage(20)
 
 func _physics_process(delta: float) -> void:
 	if is_on_floor():
@@ -81,15 +101,16 @@ func _physics_process(delta: float) -> void:
 		_is_on_floor = false
 	move_and_slide()
 	add_gravity(delta)
-	input_manager()
+	input_manager(delta)
 
-func input_manager()->void:
+func input_manager(delta)->void:
 	if no_input.size() !=0:
 		return
 	move()
 	jump()
 	roll()
 	weapon_attack()
+	idle(delta)
 
 func move()->void:
 	if no_move.size()+no_motion.size() !=0:
@@ -111,7 +132,6 @@ func move()->void:
 			var	tween = create_tween().set_ease(Tween.EASE_OUT)
 			tween_commend.add_tween(tween,"bend")
 			tween.tween_property(self,"rotation_degrees",bend_range*direction,0.2)
-			self.scale = Vector2(1.0,1.0)
 		if no_shake.size() !=0:
 			tween_commend.erase_tween("shake")
 			return
@@ -124,10 +144,12 @@ func move()->void:
 
 	else :
 		velocity.x = move_toward(velocity.x,0,slow_down_speed)
+		if _is_on_floor:
+			scale=Vector2(1.0,1.0)
 		if no_bend_back.size() !=0:
 			tween_commend.erase_tween("bend_back")
 			return
-		self.scale = Vector2(1.0,1.0)
+		#self.scale = Vector2(1.0,1.0)
 		#粒子效果
 		cpu_particles_2d.emitting = false
 		#倾斜效果
@@ -141,17 +163,26 @@ func move()->void:
 func jump()->void:
 	if no_jump.size()+no_motion.size() !=0 or _is_on_floor==null:
 		return
+	if Input.is_action_just_released("jump") and velocity.y<=-250:
+		velocity.y *=0.5
 	if _is_on_floor:
 		if Input.is_action_just_pressed("jump"):
 			velocity.y = jump_speed
+			#idle时间
+			current_time =0
+			#动画相关
+			tween_commend.erase_tween("shake")
 			var tween = create_tween()
 			tween_commend.add_tween(tween,"jump")
-			tween.tween_property(self,"scale",Vector2(1/1.2,1.2),0.2)
+			tween.tween_property(self,"scale",Vector2(1/1.2,1.2),0.1)
 
 func roll()->void:
 	if no_roll.size()+no_motion.size() !=0:
 		return
 	if Input.is_action_just_pressed("roll"):
+		#idle时间
+		current_time =0
+		cancel_idle.emit(self)
 		#存储状态
 		no_roll.append("roll")
 		no_input.append("roll")
@@ -174,6 +205,26 @@ func roll()->void:
 		await get_tree().create_timer(roll_interval).timeout
 		no_roll.erase("roll")
 
+func idle(delta)->void:
+	if no_idle.size() !=0:
+		return
+	if Input.is_anything_pressed():
+		if Input.is_action_pressed("left_move"):
+			current_time += delta
+			if current_time >= idle_time:
+				idled.emit(self)
+				current_time=0
+		elif Input.is_action_pressed("right_move"):
+			current_time += delta
+			if current_time >= idle_time:
+				idled.emit(self)
+				current_time=0
+	else:
+		current_time += delta
+		if current_time >= idle_time:
+			idled.emit(self)
+			current_time = 0
+
 func weapon_attack()->void:
 	if no_attack.size() !=0:
 		return
@@ -182,11 +233,11 @@ func weapon_attack()->void:
 
 func add_gravity(delta)->void:
 	if no_gravity.size() !=0 and _is_on_floor==null:
-		velocity.y = move_toward(velocity.y,0,get_gravity().y*gravity_mag*delta*5)
+		velocity.y = move_toward(velocity.y,0,get_gravity().y*no_gravity_slow_down*delta*5)
 		return
 	if ! _is_on_floor:
-		velocity.y = move_toward(velocity.y,max_down_speed,get_gravity().y*gravity_mag*delta)
-		if velocity.y >=300:
+		velocity.y = move_toward(velocity.y,max_down_speed,get_gravity().y*no_gravity_slow_down*delta)
+		if velocity.y >=the_down_speed:
 			is_down_speed = true
 
 func set_direction(value)->void:
@@ -206,27 +257,53 @@ func set_direction(value)->void:
 				tween.parallel().tween_property(hand_anchor,"position",Vector2(2+value/2,0),0.25)
 				tween.parallel().tween_property(camera_2d,"offset",Vector2(camera_flip_offest_x*value,0),0.2)
 				direction_change.emit(direction)
-				
 			direction = value
 
 func set_on_floor(value)->void:
 	if _is_on_floor == null:
 		_is_on_floor = value
+	if value == _is_on_floor and _is_on_floor == false:
+		if velocity.y>=-200:
+			#开始下降
+			if ! tween_commend.get_tween("bounce") and is_bounce == false:
+				tween_commend.erase_tween("jump")
+				var tween = create_tween()
+				tween_commend.add_tween(tween,"bounce")
+				tween.tween_property(self,"scale",Vector2(1.0,1.0),0.15)
+				await tween.finished
+				is_bounce = true
+			if ! is_bounce:
+				return
+			if ! tween_commend.get_tween("free_fall"):
+				var tween = create_tween()
+				tween_commend.add_tween(tween,"free_fall")
+				tween.tween_property(self,"scale",Vector2(1/1.2,1.2),0.5)
 	if value != _is_on_floor:
 		if value == false:
-			#起飞了
-			if ! tween_commend.all_tween.get("jump",false):
+			#自由落体了
+			if ! tween_commend.get_tween("jump"):
 				var tween = create_tween()
 				tween_commend.add_tween(tween,"free_fall")
 				tween.tween_property(self,"scale",Vector2(1/1.4,1.4),1)
 		elif value == true:
 			#落地了
+			is_bounce = false
+			tween_commend.erase_tween("bounce")
+			tween_commend.erase_tween("jump")
 			if tween_commend.all_tween.get("free_fall",false):
 				tween_commend.erase_tween("free_fall")
+			if no_down_tween.size() !=0:
+				_is_on_floor = value
+				return
 			if is_down_speed:
 				var tween = create_tween().set_trans(Tween.TRANS_BOUNCE)
-				tween_commend.add_tween(tween,"land")
+				tween_commend.add_tween(tween,"land_quick")
 				tween.tween_property(self,"scale",Vector2(1/0.75,0.75),0.05)
 				tween.parallel().tween_property(self,"rotation_degrees",bend_range*direction,0.05)
+				tween.tween_property(self,"scale",Vector2(1,1),0.05)
 				is_down_speed= false
+			else:
+				var tween = create_tween()
+				tween_commend.add_tween(tween,"land_slow")
+				tween.tween_property(self,"scale",Vector2(1,1),0.05)
 		_is_on_floor = value

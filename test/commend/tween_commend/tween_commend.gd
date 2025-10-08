@@ -6,6 +6,13 @@ extends Node
 var all_tween:Dictionary[StringName,Tween]
 
 
+func get_tween(_name:StringName)->bool:
+	var BOOL = all_tween.get(_name,false)
+	if BOOL:
+		return true
+	else:
+		return false
+
 func add_tween(tween:Tween,_name:StringName)->void:
 	if !_owner:
 		print("未分配控制者")

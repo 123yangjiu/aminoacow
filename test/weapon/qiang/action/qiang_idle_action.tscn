@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://bii18oexollf6"]
+
+[ext_resource type="Script" uid="uid://bhs2gog5f8gwu" path="res://test/weapon/qiang/action/qiang_idle_action.gd" id="1_xjhlq"]
+
+[node name="QiangIdleAction" type="Node"]
+script = ExtResource("1_xjhlq")
