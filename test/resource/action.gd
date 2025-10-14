@@ -1,9 +1,15 @@
 class_name PlayerAction
 extends Node
 
+const normal_attack = "normal_attack"
+const exchange_attack = "exchange_attack"
+const idle ="idle"
+
 var hand:Node2D
 var player:NewPlayer
 var weapon:NewWeapon
+var type:String
+
 
 func is_performable()->bool:
 	return false
@@ -13,12 +19,15 @@ func perform()->void:
 
 func interval_restatus()->void:
 	weapon.monitoring = false
-	player.no_direction.erase("attack")
-	player.no_roll.erase("attack")
-	player.no_attack.erase("attack")
-	player.no_down_tween.erase("attack")
+	player.no_direction.erase(type)
+	player.no_roll.erase(type)
+	player.no_attack.erase(type)
+	player.no_down_tween.erase(type)
+	player.no_idle.erase(type)
+	print(type)
+	print(player.no_direction)
 
 func after_interval_restatus()->void:
-	player.no_bend.erase("attack")
-	player.no_shake.erase("attack")
+	player.no_bend.erase(type)
+	player.no_shake.erase(type)
 	#weapon.audio_stream_player_2d.stop()

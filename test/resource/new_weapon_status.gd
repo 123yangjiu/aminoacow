@@ -18,6 +18,7 @@ enum TYPE{
 @export var normal_action:PackedScene
 @export var normal_aiction_audio:AudioStream
 @export var exchange_action:PackedScene
+@export var exchange_aiction_audio:AudioStream
 @export var idle_action:PackedScene
 
 

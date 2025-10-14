@@ -1,24 +1,26 @@
-[gd_resource type="Resource" script_class="NewWeaponStatus" load_steps=7 format=3 uid="uid://cwj8cjsr3ytw2"]
+[gd_resource type="Resource" script_class="NewWeaponStatus" load_steps=8 format=3 uid="uid://cwj8cjsr3ytw2"]
 
 [ext_resource type="Script" uid="uid://bdu6y5vdg1tdw" path="res://test/resource/new_weapon_status.gd" id="1_bj0ry"]
 [ext_resource type="Shape2D" uid="uid://5weiju01omyh" path="res://test/weapon/jian/resource/jian_attack_shape.tres" id="1_kfi8r"]
-[ext_resource type="PackedScene" uid="uid://crulxtoavgoe5" path="res://test/weapon/jian/action/jian_normal_action.tscn" id="2_kfi8r"]
-[ext_resource type="PackedScene" uid="uid://bexmtenaht88b" path="res://test/weapon/jian/action/jian_idle_action.tscn" id="2_m22sw"]
+[ext_resource type="PackedScene" uid="uid://dtgwgemiy0db" path="res://test/weapon/jian/action/exchange/jian_exchange_action.tscn" id="2_mfwa5"]
+[ext_resource type="PackedScene" uid="uid://bexmtenaht88b" path="res://test/weapon/jian/action/idle/jian_idle_action.tscn" id="3_6633v"]
 [ext_resource type="AudioStream" uid="uid://sqk4djsus2l0" path="res://test/art/video_impact/Sword Slide 03.wav" id="3_fnpbg"]
-[ext_resource type="Texture2D" uid="uid://7al5tfpaq352" path="res://stats/weapon/jian/sword.png" id="3_kfi8r"]
+[ext_resource type="PackedScene" uid="uid://crulxtoavgoe5" path="res://test/weapon/jian/action/normal/jian_normal_action.tscn" id="4_qo1xc"]
+[ext_resource type="Texture2D" uid="uid://hvspcpo5yl5u" path="res://test/weapon/jian/resource/sword.png" id="6_m22sw"]
 
 [resource]
 script = ExtResource("1_bj0ry")
 name = 1
-texture = ExtResource("3_kfi8r")
+texture = ExtResource("6_m22sw")
 sprite_offset = Vector2(-1, -7)
-init_offset = Vector2(1.5, 0)
+init_offset = Vector2(1.5, 0.5)
 attackshape = ExtResource("1_kfi8r")
-attackshape_offset = Vector2(0, -2.5)
-normal_action = ExtResource("2_kfi8r")
+attackshape_offset = Vector2(-1, -9.5)
+normal_action = ExtResource("4_qo1xc")
 normal_aiction_audio = ExtResource("3_fnpbg")
-idle_action = ExtResource("2_m22sw")
-left_hand_offset = Vector2(1, 0.5)
+exchange_action = ExtResource("2_mfwa5")
+idle_action = ExtResource("3_6633v")
+left_hand_offset = Vector2(0.5, -0.5)
 if_left_hand_flip = true
 right_hand_offset = Vector2(1.5, 0.5)
 metadata/_custom_type_script = "uid://bdu6y5vdg1tdw"

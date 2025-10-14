@@ -18,6 +18,7 @@ enum TWEEN_TYPE{
 
 
 #all_commend
+@export var all_commend:Array[Node]
 @onready var health_commend: HealthCommend = $all_commend/health_commend
 @onready var tween_commend: TweenCommend = $all_commend/tween_commend
 
@@ -30,7 +31,6 @@ enum TWEEN_TYPE{
 @onready var left_hand: Sprite2D = $Anchor/Mainsprite2D/HandAnchor/LeftHand
 @onready var right_hand: Sprite2D = $Anchor/Mainsprite2D/HandAnchor/RightHand
 @onready var weapon: NewWeapon = $Anchor/Mainsprite2D/HandAnchor/Weapon
-@export var all_commend:Array[Node]
 
 #physice_input-related
 var direction := 1.0 :set = set_direction
@@ -63,6 +63,7 @@ var nomotion_time=0
 signal idled(who:NewPlayer)
 signal cancel_idle(who:NewPlayer)
 
+
 #other_physics-related
 var camera_flip_offest_x :=5
 var hand_flip_range :=1.5
@@ -82,6 +83,8 @@ var no_shake:Array
 var no_bend_back:Array
 var no_idle:Array
 var no_down_tween:Array
+var no_exchange:Array
+
 
 func _ready() -> void:
 	if init_weapon:
@@ -170,6 +173,8 @@ func jump()->void:
 			velocity.y = jump_speed
 			#idle时间
 			current_time =0
+			if tween_commend.get_tween("weapon_idle"):
+				weapon.qiang_jumpidle(self)
 			#动画相关
 			tween_commend.erase_tween("shake")
 			var tween = create_tween()
@@ -181,7 +186,6 @@ func roll()->void:
 		return
 	if Input.is_action_just_pressed("roll"):
 		#idle时间
-		current_time =0
 		cancel_idle.emit(self)
 		#存储状态
 		no_roll.append("roll")
@@ -229,6 +233,10 @@ func weapon_attack()->void:
 	if no_attack.size() !=0:
 		return
 	if Input.is_action_just_pressed("attack"):
+		var up_or_down = Input.get_axis("up","down")
+		if up_or_down:
+			weapon.play_exchange(self,up_or_down)
+			return
 		weapon.play_normal(self)
 
 func add_gravity(delta)->void:

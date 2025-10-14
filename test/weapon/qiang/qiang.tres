@@ -1,17 +1,21 @@
-[gd_resource type="Resource" script_class="NewWeaponStatus" load_steps=5 format=3 uid="uid://bone2ofdfk761"]
+[gd_resource type="Resource" script_class="NewWeaponStatus" load_steps=7 format=3 uid="uid://bone2ofdfk761"]
 
 [ext_resource type="Shape2D" uid="uid://cmkaoj4ii3vbw" path="res://stats/weapon/qiang/qiang_shape.tres" id="1_b5oji"]
 [ext_resource type="Script" uid="uid://bdu6y5vdg1tdw" path="res://test/resource/new_weapon_status.gd" id="1_e76vt"]
-[ext_resource type="PackedScene" uid="uid://c3163atjrsu4h" path="res://test/weapon/qiang/action/qiang_normal_action.tscn" id="2_4b6wx"]
-[ext_resource type="Texture2D" uid="uid://blplsndhjt4f5" path="res://test/weapon/qiang/qiang.png" id="4_4b6wx"]
+[ext_resource type="PackedScene" uid="uid://c3163atjrsu4h" path="res://test/weapon/qiang/action/normal/qiang_normal_action.tscn" id="2_4b6wx"]
+[ext_resource type="PackedScene" uid="uid://bii18oexollf6" path="res://test/weapon/qiang/action/idle/qiang_idle_action.tscn" id="2_fbaci"]
+[ext_resource type="AudioStream" uid="uid://nbqlswcqnr2y" path="res://test/weapon/qiang/resource/qiang_sound_normalattack.wav" id="4_62owo"]
+[ext_resource type="Texture2D" uid="uid://blplsndhjt4f5" path="res://test/weapon/qiang/resource/qiang.png" id="6_1qwat"]
 
 [resource]
 script = ExtResource("1_e76vt")
 name = 2
-texture = ExtResource("4_4b6wx")
+texture = ExtResource("6_1qwat")
 sprite_offset = Vector2(6.5, -0.5)
-init_offset = Vector2(0, 1)
+init_offset = Vector2(-0.5, 1.5)
 attackshape = ExtResource("1_b5oji")
-attackshape_offset = Vector2(6, 0.5)
+attackshape_offset = Vector2(13, -0.5)
 normal_action = ExtResource("2_4b6wx")
+normal_aiction_audio = ExtResource("4_62owo")
+idle_action = ExtResource("2_fbaci")
 metadata/_custom_type_script = "uid://bdu6y5vdg1tdw"

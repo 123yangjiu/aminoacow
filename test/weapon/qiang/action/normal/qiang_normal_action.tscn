@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://c3163atjrsu4h"]
 
-[ext_resource type="Script" uid="uid://cxh5bblbk4a7w" path="res://test/weapon/qiang/action/qiang_normal_action.gd" id="1_mw4yg"]
+[ext_resource type="Script" uid="uid://cxh5bblbk4a7w" path="res://test/weapon/qiang/action/normal/qiang_normal_action.gd" id="1_mw4yg"]
 
 [node name="QiangNormalAction" type="Node"]
 script = ExtResource("1_mw4yg")

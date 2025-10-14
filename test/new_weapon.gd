@@ -5,6 +5,10 @@ extends Area2D
 #status
 @export var current_status:NewWeaponStatus
 @export var all_status:Array[NewWeaponStatus]
+
+var	weapon_up_else:NewWeaponStatus
+var	weapon_down_else:NewWeaponStatus
+
 @export var hand:Node
 
 #node
@@ -16,29 +20,54 @@ extends Area2D
 var normal_action:PlayerAction
 var exchange_action:PlayerAction
 var idle_action:PlayerAction
+#差异化
+var qiang:=false
+var jian:=false
+var gong:=false
+
+
 
 func _init_status(which:NewWeaponStatus) -> void:
+	#重置属性
+	qiang = false
+	gong = false
+	jian = false
+	normal_action = null
+	exchange_action = null
+	#其他武器放置
+	for i in all_status:
+		if i!=which:
+			if !weapon_up_else:
+				weapon_up_else= i
+			else:
+				weapon_down_else=i
+	#节点基本属性
 	current_status = which
 	sprite_2d.texture = which.texture
 	sprite_2d.position = which.sprite_offset
 	self.position = which.init_offset
 	collision_shape_2d.shape = which.attackshape
 	collision_shape_2d.disabled = true
-	collision_shape_2d.position = which.attackshape_offset + which.sprite_offset
-	normal_action = null
-	exchange_action = null
-	audio_stream_player_2d.stream = current_status.normal_aiction_audio
-	#hand_status
+	collision_shape_2d.position = which.attackshape_offset
+	#hand属性
 	left_hand.flip_h = which.if_left_hand_flip
 	left_hand.position = which.left_hand_offset
 	right_hand.flip_h = which.if_right_hand_flip
 	right_hand.position = which.right_hand_offset
+	#action布置
 	if which.normal_action:
 		normal_action = which.normal_action.instantiate()
 	if which.exchange_action:
 		exchange_action = which.exchange_action.instantiate()
 	if which.idle_action:
 		idle_action = which.idle_action.instantiate()
+	#确认武器类别
+	if current_status.name == current_status.TYPE.JIAN:
+		jian = true
+	if current_status.name == current_status.TYPE.QIANG:
+		qiang = true
+	if current_status.name == current_status.TYPE.GONG:
+		gong = true
 
 func play_normal(who:NewPlayer)->void:
 	if ! normal_action:
@@ -50,22 +79,38 @@ func play_normal(who:NewPlayer)->void:
 	if ! normal_action.is_performable():
 		return
 	#idle时间
-	who.current_time =0
+	var type = normal_action.normal_attack
 	on_cancel_idle(who)
 	who.tween_commend.erase_tween("land_slow")
 	who.tween_commend.erase_tween("land_quick")
-	who.no_direction.append("attack")
-	who.no_roll.append("attack")
-	who.no_attack.append("attack")
-	who.no_bend.append("attack")
-	who.no_shake.append("attack")
-	who.no_down_tween.append("attack")
+	who.no_direction.append(type)
+	who.no_roll.append(type)
+	who.no_attack.append(type)
+	who.no_bend.append(type)
+	who.no_shake.append(type)
+	who.no_down_tween.append(type)
+	who.no_idle.append(type)
 	who.scale = Vector2(1.0,1.0)
+	audio_stream_player_2d.stream = current_status.normal_aiction_audio
 	audio_stream_player_2d.play()
 	normal_action.perform()
 
-func play_exchange(who:NewPlayer)->void:
-	print("ACTION")
+func play_exchange(who:NewPlayer,which:float)->void:
+	#找武器,切武器
+	var current_index = all_status.find(all_status[current_status.name])
+	print(current_index)
+	if current_index==-1:
+		return
+	var new_index = current_index+which
+	if new_index >all_status.size()-1:
+		new_index=0
+	elif new_index <0:
+		new_index=all_status.size()-1
+	var new_weapon:NewWeaponStatus =  all_status.get(new_index)
+	if ! new_weapon.exchange_action:
+		return
+	_init_status(new_weapon)
+	#正常流程
 	if exchange_action.hand ==null:
 		exchange_action.hand = hand
 		exchange_action.player= who
@@ -74,14 +119,19 @@ func play_exchange(who:NewPlayer)->void:
 		return
 	who.current_time =0
 	on_cancel_idle(who)
+	var type = exchange_action.exchange_attack
 	who.tween_commend.erase_tween("land_slow")
 	who.tween_commend.erase_tween("land_quick")
-	who.no_direction.append("attack")
-	who.no_roll.append("attack")
-	who.no_attack.append("attack")
-	who.no_bend.append("attack")
-	who.no_shake.append("attack")
+	who.no_direction.append(type)
+	who.no_roll.append(type)
+	who.no_attack.append(type)
+	who.no_bend.append(type)
+	who.no_shake.append(type)
+	who.no_down_tween.append(type)
+	who.no_idle.append(type)
 	who.scale = Vector2(1.0,1.0)
+	#武器执行攻击
+	audio_stream_player_2d.stream = current_status.exchange_aiction_audio
 	audio_stream_player_2d.play()
 	exchange_action.perform()
 
@@ -92,13 +142,49 @@ func on_idled(who:NewPlayer)->void:
 		idle_action.hand = hand
 		idle_action.player = who
 		idle_action.weapon = self
+		idle_action.type = "weapon_idle"
 	if ! idle_action.is_performable():
 		return
-	who.no_idle.append("idle")
+	var type =idle_action.idle
+	who.no_idle.append(type)
+	if qiang:
+		who.no_idle.erase(type)
 	idle_action.perform()
 
 func on_cancel_idle(who:NewPlayer)->void:
-	who.no_idle.erase("weapon_idle")
-	self.position = current_status.init_offset
-	self.rotation_degrees =0
-	self.scale = Vector2(1.0,1.0)
+	var type =idle_action.idle
+	who.no_idle.erase(type)
+	who.tween_commend.erase_tween(type)
+	who.current_time=0
+	var tween = create_tween().bind_node(who)
+	who.tween_commend.add_tween(tween,"cancel_idle")
+	tween.tween_property(self,"position",current_status.init_offset,0.02)
+	tween.tween_property(hand,"position",Vector2(2.5,0),0.02)
+	tween.tween_property(self,"rotation_degrees",0,0.02)
+	tween.tween_property(self,"scale", Vector2(1.0,1.0),0.02)
+	#self.position = current_status.init_offset
+	#self.rotation_degrees =0
+	#self.scale = Vector2(1.0,1.0)
+
+func qiang_jumpidle(who:NewPlayer)->void:
+	if !qiang:
+		return
+	var tween = create_tween().bind_node(who)
+	who.tween_commend.add_tween(tween,"qiang_jumpidle")
+	var n=0
+	for i in range(4):
+		if self.rotation_degrees <1440:
+			n+=360
+		else:
+			break
+	var time = (n-rotation_degrees)/2700
+	var type =idle_action.idle
+	if who.tween_commend.get_tween(type):
+		who.tween_commend.erase_tween(type)
+	tween.set_trans(Tween.TRANS_CUBIC)
+	tween.set_ease(Tween.EASE_OUT)
+	tween.tween_property(self,"position",current_status.init_offset,time)
+	tween.parallel().tween_property(hand,"position:y",0,time)
+	#tween.set_ease(Tween.EASE_IN)
+	tween.set_trans(Tween.TRANS_LINEAR)
+	tween.parallel().tween_property(self,"rotation_degrees",n,time)

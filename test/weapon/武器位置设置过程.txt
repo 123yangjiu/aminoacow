@@ -1,0 +1,6 @@
+1.转到new_weapon场景
+2.将Sprite2D节点的Texture属性设置好
+3.移动Sprite2D节点的位置，使你武器图像的 用手握的 位置与坐标原点对齐，这时Sprite2D节点的位置就是tres里的sprite_offset
+4.再设置碰撞面积
+5.保存节点，转到new_player场景，调整weapon和hand位置到你想要的位置，这时weapon节点的位置就是init_offset
+6.左右手的位置不用我多说了吧

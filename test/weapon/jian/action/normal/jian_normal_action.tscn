@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://crulxtoavgoe5"]
 
-[ext_resource type="Script" uid="uid://d1eb1y0lt0ykl" path="res://test/weapon/jian/action/jian_normal_action.gd" id="1_tgjmq"]
+[ext_resource type="Script" uid="uid://d1eb1y0lt0ykl" path="res://test/weapon/jian/action/normal/jian_normal_action.gd" id="1_tgjmq"]
 
 [node name="JianNormalAction" type="Node"]
 script = ExtResource("1_tgjmq")

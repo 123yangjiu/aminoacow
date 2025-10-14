@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://blplsndhjt4f5"
-path="res://.godot/imported/qiang.png-d99908a90fe791e795691ac0e58ff82e.ctex"
+path="res://.godot/imported/qiang.png-d065692d587790cc0ad7bcb74273b8ee.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://test/weapon/qiang/qiang.png"
-dest_files=["res://.godot/imported/qiang.png-d99908a90fe791e795691ac0e58ff82e.ctex"]
+source_file="res://test/weapon/qiang/resource/qiang.png"
+dest_files=["res://.godot/imported/qiang.png-d065692d587790cc0ad7bcb74273b8ee.ctex"]
 
 [params]
 

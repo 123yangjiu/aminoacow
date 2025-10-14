@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://m0xb4jacwcpl"]
+[gd_scene load_steps=17 format=3 uid="uid://m0xb4jacwcpl"]
 
 [ext_resource type="Script" uid="uid://b3d6y7ru46qov" path="res://test/character/player/player.gd" id="1_wvbbu"]
 [ext_resource type="Shader" uid="uid://4ftor8t3muj6" path="res://test/commend/health_commend/health_image.gdshader" id="1_yflpm"]
@@ -9,10 +9,8 @@
 [ext_resource type="PackedScene" uid="uid://4iby6oili3lx" path="res://test/new_weapon.tscn" id="6_igf08"]
 [ext_resource type="Resource" uid="uid://bone2ofdfk761" path="res://test/weapon/qiang/qiang.tres" id="7_lqln8"]
 [ext_resource type="Script" uid="uid://bdu6y5vdg1tdw" path="res://test/resource/new_weapon_status.gd" id="8_2d0cg"]
-[ext_resource type="Resource" uid="uid://hxd3dclnmglc" path="res://test/weapon/gong/gong.tres" id="9_3bab5"]
 [ext_resource type="Resource" uid="uid://cwj8cjsr3ytw2" path="res://test/weapon/jian/jian.tres" id="9_ajtp3"]
 [ext_resource type="PackedScene" uid="uid://s2n3is05nce4" path="res://test/commend/tween_commend/tween_commend.tscn" id="9_v3rst"]
-[ext_resource type="Script" uid="uid://xibgmh8k4qvj" path="res://test/character/player/player_related/weapon_pack.gd" id="11_3bab5"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_56kpk"]
 size = Vector2(10, 9)
@@ -37,11 +35,10 @@ generate_mipmaps = false
 noise = SubResource("FastNoiseLite_wvbbu")
 color_ramp = SubResource("Gradient_wvbbu")
 
-[node name="NewPlayer" type="CharacterBody2D" node_paths=PackedStringArray("all_commend")]
+[node name="NewPlayer" type="CharacterBody2D"]
 collision_layer = 2
 script = ExtResource("1_wvbbu")
 init_weapon = ExtResource("7_lqln8")
-all_commend = [NodePath("all_commend/health_commend"), NodePath("all_commend/tween_commend")]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, -0.5)
@@ -65,29 +62,21 @@ position = Vector2(2.5, 0)
 
 [node name="RightHand" type="Sprite2D" parent="Anchor/Mainsprite2D/HandAnchor"]
 use_parent_material = true
-position = Vector2(1.5, 0.5)
+position = Vector2(2, 0.5)
 texture = ExtResource("5_0t4de")
 region_rect = Rect2(9, 4, 2, 2)
 
 [node name="Weapon" parent="Anchor/Mainsprite2D/HandAnchor" node_paths=PackedStringArray("hand") instance=ExtResource("6_igf08")]
-position = Vector2(1.5, 0.5)
+position = Vector2(0.5, 1)
 monitoring = false
-all_status = Array[ExtResource("8_2d0cg")]([ExtResource("7_lqln8"), ExtResource("9_ajtp3"), ExtResource("9_3bab5")])
+all_status = Array[ExtResource("8_2d0cg")]([ExtResource("7_lqln8"), ExtResource("9_ajtp3")])
 hand = NodePath("..")
 
 [node name="LeftHand" type="Sprite2D" parent="Anchor/Mainsprite2D/HandAnchor"]
 use_parent_material = true
-position = Vector2(0.5, -0.5)
+position = Vector2(-3, 0.5)
 texture = ExtResource("4_jbp6r")
-flip_h = true
 region_rect = Rect2(0, 0, 7, 8)
-
-[node name="WeaponPack" type="Node2D" parent="Anchor/Mainsprite2D"]
-script = ExtResource("11_3bab5")
-
-[node name="UpWeapon" type="Sprite2D" parent="Anchor/Mainsprite2D/WeaponPack"]
-
-[node name="DownWeapon" type="Sprite2D" parent="Anchor/Mainsprite2D/WeaponPack"]
 
 [node name="CPUParticles2D" type="CPUParticles2D" parent="."]
 position = Vector2(-0.5, 5)
