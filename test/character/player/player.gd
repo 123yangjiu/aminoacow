@@ -1,6 +1,7 @@
 class_name NewPlayer
 extends CharacterBody2D
 
+#各tween的名字，实际上没什么用
 enum TWEEN_TYPE{
 	bend,
 	bend_back,
@@ -32,7 +33,7 @@ enum TWEEN_TYPE{
 @onready var right_hand: Sprite2D = $Anchor/Mainsprite2D/HandAnchor/RightHand
 @onready var weapon: NewWeapon = $Anchor/Mainsprite2D/HandAnchor/Weapon
 
-#physice_input-related
+#physice_input-related各种物理效果
 var direction := 1.0 :set = set_direction
 	#move
 var speed_up_speed := 60
@@ -63,13 +64,12 @@ var nomotion_time=0
 signal idled(who:NewPlayer)
 signal cancel_idle(who:NewPlayer)
 
-
 #other_physics-related
 var camera_flip_offest_x :=5
 var hand_flip_range :=1.5
 var roll_hf_range :=-2.5
 
-#what_i_can_do
+#what_i_can_do字面意思
 var no_roll:Array
 var no_attack:Array
 var no_gravity:Array
@@ -87,8 +87,10 @@ var no_exchange:Array
 
 
 func _ready() -> void:
+	#初始化武器
 	if init_weapon:
 		weapon._init_status(init_weapon)
+	#连接idle和取消idle的信号
 	if ! idled.is_connected(weapon.on_idled):
 		idled.connect(weapon.on_idled)
 	if !cancel_idle.is_connected(weapon.on_cancel_idle):
@@ -107,6 +109,7 @@ func _physics_process(delta: float) -> void:
 	input_manager(delta)
 
 func input_manager(delta)->void:
+	#管理输入
 	if no_input.size() !=0:
 		return
 	move()
@@ -119,6 +122,7 @@ func move()->void:
 	if no_move.size()+no_motion.size() !=0:
 		return
 	direction = Input.get_axis("left_move","right_move")
+	#用于实现攻击时只移动不转向
 	var real_direction = Input.get_axis("left_move","right_move")
 	if Input.is_action_pressed("left_move") or Input.is_action_pressed("right_move"):
 		velocity.x = move_toward(velocity.x,max_speed*real_direction,speed_up_speed)
@@ -126,6 +130,7 @@ func move()->void:
 		cpu_particles_2d.emitting =true
 		#倾斜效果
 		if no_bend.size() !=0:
+			#取消倾斜
 			tween_commend.erase_tween("bend")
 			var tween = create_tween().set_ease(Tween.EASE_OUT)
 			tween_commend.add_tween(tween,"bend_back")
@@ -135,6 +140,7 @@ func move()->void:
 			var	tween = create_tween().set_ease(Tween.EASE_OUT)
 			tween_commend.add_tween(tween,"bend")
 			tween.tween_property(self,"rotation_degrees",bend_range*direction,0.2)
+		#摇动效果
 		if no_shake.size() !=0:
 			tween_commend.erase_tween("shake")
 			return
@@ -235,8 +241,10 @@ func weapon_attack()->void:
 	if Input.is_action_just_pressed("attack"):
 		var up_or_down = Input.get_axis("up","down")
 		if up_or_down:
+			#切武器加切武器攻击
 			weapon.play_exchange(self,up_or_down)
 			return
+		#普通攻击
 		weapon.play_normal(self)
 
 func add_gravity(delta)->void:

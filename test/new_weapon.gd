@@ -83,6 +83,7 @@ func play_normal(who:NewPlayer)->void:
 	on_cancel_idle(who)
 	who.tween_commend.erase_tween("land_slow")
 	who.tween_commend.erase_tween("land_quick")
+	#攻击时不能干什么
 	who.no_direction.append(type)
 	who.no_roll.append(type)
 	who.no_attack.append(type)
