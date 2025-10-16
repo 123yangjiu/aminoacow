@@ -65,29 +65,44 @@ position = Vector2(2.5, 0)
 
 [node name="RightHand" type="Sprite2D" parent="Anchor/Mainsprite2D/HandAnchor"]
 use_parent_material = true
-position = Vector2(1.5, 0.5)
+position = Vector2(2, 0.5)
 texture = ExtResource("5_0t4de")
 region_rect = Rect2(9, 4, 2, 2)
 
-[node name="Weapon" parent="Anchor/Mainsprite2D/HandAnchor" node_paths=PackedStringArray("hand") instance=ExtResource("6_igf08")]
+[node name="Weapon" parent="Anchor/Mainsprite2D/HandAnchor" instance=ExtResource("6_igf08")]
 position = Vector2(1.5, 0.5)
 monitoring = false
 all_status = Array[ExtResource("8_2d0cg")]([ExtResource("7_lqln8"), ExtResource("9_ajtp3"), ExtResource("9_3bab5")])
-hand = NodePath("..")
 
 [node name="LeftHand" type="Sprite2D" parent="Anchor/Mainsprite2D/HandAnchor"]
 use_parent_material = true
-position = Vector2(0.5, -0.5)
+position = Vector2(-3, 0.5)
 texture = ExtResource("4_jbp6r")
-flip_h = true
 region_rect = Rect2(0, 0, 7, 8)
 
-[node name="WeaponPack" type="Node2D" parent="Anchor/Mainsprite2D"]
+[node name="WeaponPack" type="Node2D" parent="Anchor"]
+z_index = -1
 script = ExtResource("11_3bab5")
+qiang = ExtResource("7_lqln8")
+jian = ExtResource("9_ajtp3")
+gong = ExtResource("9_3bab5")
 
-[node name="UpWeapon" type="Sprite2D" parent="Anchor/Mainsprite2D/WeaponPack"]
+[node name="ElseWeapon" type="Sprite2D" parent="Anchor/WeaponPack"]
+self_modulate = Color(1, 1, 1, 0.5882353)
+position = Vector2(3, -2)
+rotation = 0.7853982
 
-[node name="DownWeapon" type="Sprite2D" parent="Anchor/Mainsprite2D/WeaponPack"]
+[node name="DownWeapon" type="Sprite2D" parent="Anchor/WeaponPack"]
+self_modulate = Color(1, 1, 1, 0.5882353)
+position = Vector2(-1, 0)
+rotation = 3.1415927
+scale = Vector2(1, -1)
+
+[node name="UpWeapon" type="Sprite2D" parent="Anchor/WeaponPack"]
+self_modulate = Color(1, 1, 1, 0.5882353)
+position = Vector2(-1.0000001, -2)
+rotation = -0.6981317
+scale = Vector2(0.99999994, 0.99999994)
 
 [node name="CPUParticles2D" type="CPUParticles2D" parent="."]
 position = Vector2(-0.5, 5)

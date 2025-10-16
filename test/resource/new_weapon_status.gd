@@ -14,13 +14,27 @@ enum TYPE{
 @export var attackshape:Shape2D
 @export var attackshape_offset:Vector2
 
+@export_category("pack_state_up")
+@export var pack_up_position:Vector2
+@export var pack_up_rotation:float
+@export var pack_up_scale:Vector2
+
+@export_category("pack_state_down")
+@export var pack_down_position:Vector2
+@export var pack_down_rotation:float
+@export var pack_down_scale:Vector2
+
+@export_category("pack_state_idle")
+@export var pack_idle_position:Vector2
+@export var pack_idle_rotation:float
+@export var pack_idle_scale:Vector2
+
 @export_category("action")
 @export var normal_action:PackedScene
 @export var normal_aiction_audio:AudioStream
 @export var exchange_action:PackedScene
 @export var exchange_aiction_audio:AudioStream
 @export var idle_action:PackedScene
-
 
 @export_category("hand_state")
 @export var left_hand_offset:Vector2 =Vector2(-3.0,0.5)

@@ -1,6 +1,7 @@
 class_name PlayerAction
 extends Node
 
+#no_指示物 & action的tween名字
 const normal_attack = "normal_attack"
 const exchange_attack = "exchange_attack"
 const idle ="idle"
@@ -24,8 +25,6 @@ func interval_restatus()->void:
 	player.no_attack.erase(type)
 	player.no_down_tween.erase(type)
 	player.no_idle.erase(type)
-	print(type)
-	print(player.no_direction)
 
 func after_interval_restatus()->void:
 	player.no_bend.erase(type)

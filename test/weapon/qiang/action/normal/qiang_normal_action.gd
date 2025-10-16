@@ -29,7 +29,6 @@ func perform()->void:
 	tween.tween_property(hand,"position",hand_position,back_time)
 	#结束
 	await tween.finished
-	print(player.no_direction)
 	interval_restatus()
 	await player.get_tree().create_timer(0.15).timeout
 	after_interval_restatus()

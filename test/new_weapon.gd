@@ -5,11 +5,13 @@ extends Area2D
 #status
 @export var current_status:NewWeaponStatus
 @export var all_status:Array[NewWeaponStatus]
+signal weapon_exchange_up(which:NewWeaponStatus)
+signal weapon_exchange_down(which:NewWeaponStatus)
 
 var	weapon_up_else:NewWeaponStatus
 var	weapon_down_else:NewWeaponStatus
 
-@export var hand:Node
+@onready var hand: Node2D = $".."
 
 #node
 @onready var sprite_2d: Sprite2D = $Sprite2D
@@ -39,8 +41,10 @@ func _init_status(which:NewWeaponStatus) -> void:
 		if i!=which:
 			if !weapon_up_else:
 				weapon_up_else= i
+				weapon_exchange_up.emit(weapon_up_else)
 			else:
 				weapon_down_else=i
+				weapon_exchange_down.emit(weapon_down_else)
 	#节点基本属性
 	current_status = which
 	sprite_2d.texture = which.texture
@@ -80,7 +84,8 @@ func play_normal(who:NewPlayer)->void:
 		return
 	#idle时间
 	var type = normal_action.normal_attack
-	on_cancel_idle(who)
+	if who.is_idle:
+		on_cancel_idle(who)
 	who.tween_commend.erase_tween("land_slow")
 	who.tween_commend.erase_tween("land_quick")
 	#攻击时不能干什么
@@ -99,7 +104,6 @@ func play_normal(who:NewPlayer)->void:
 func play_exchange(who:NewPlayer,which:float)->void:
 	#找武器,切武器
 	var current_index = all_status.find(all_status[current_status.name])
-	print(current_index)
 	if current_index==-1:
 		return
 	var new_index = current_index+which
@@ -108,6 +112,10 @@ func play_exchange(who:NewPlayer,which:float)->void:
 	elif new_index <0:
 		new_index=all_status.size()-1
 	var new_weapon:NewWeaponStatus =  all_status.get(new_index)
+	if which==1:
+		weapon_exchange_up.emit(current_status)
+	elif which ==-1:
+		weapon_exchange_down.emit(current_status)
 	if ! new_weapon.exchange_action:
 		return
 	_init_status(new_weapon)
@@ -118,8 +126,8 @@ func play_exchange(who:NewPlayer,which:float)->void:
 		exchange_action.weapon = self
 	if ! exchange_action.is_performable():
 		return
-	who.current_time =0
-	on_cancel_idle(who)
+	if who.is_idle:
+		on_cancel_idle(who)
 	var type = exchange_action.exchange_attack
 	who.tween_commend.erase_tween("land_slow")
 	who.tween_commend.erase_tween("land_quick")
@@ -148,6 +156,8 @@ func on_idled(who:NewPlayer)->void:
 		return
 	var type =idle_action.idle
 	who.no_idle.append(type)
+	who.current_time =0
+	who.is_idle = true
 	if qiang:
 		who.no_idle.erase(type)
 	idle_action.perform()
@@ -155,17 +165,19 @@ func on_idled(who:NewPlayer)->void:
 func on_cancel_idle(who:NewPlayer)->void:
 	var type =idle_action.idle
 	who.no_idle.erase(type)
+	who.is_idle = false
 	who.tween_commend.erase_tween(type)
 	who.current_time=0
-	var tween = create_tween().bind_node(who)
-	who.tween_commend.add_tween(tween,"cancel_idle")
-	tween.tween_property(self,"position",current_status.init_offset,0.02)
-	tween.tween_property(hand,"position",Vector2(2.5,0),0.02)
-	tween.tween_property(self,"rotation_degrees",0,0.02)
-	tween.tween_property(self,"scale", Vector2(1.0,1.0),0.02)
-	#self.position = current_status.init_offset
-	#self.rotation_degrees =0
-	#self.scale = Vector2(1.0,1.0)
+	#var tween = create_tween().bind_node(who)
+	#who.tween_commend.add_tween(tween,"cancel_idle")
+	#tween.tween_property(self,"position",current_status.init_offset,0.02)
+	#tween.tween_property(hand,"position",Vector2(2+who.direction/2,0),0.02)
+	#tween.tween_property(self,"rotation_degrees",0,0.02)
+	#tween.tween_property(self,"scale", Vector2(1.0,1.0),0.02)
+	self.position= current_status.init_offset
+	hand.position = Vector2(2+who.direction/2,0)
+	self.rotation_degrees=0
+	self.scale=Vector2(1.0,1.0)
 
 func qiang_jumpidle(who:NewPlayer)->void:
 	if !qiang:
@@ -174,11 +186,11 @@ func qiang_jumpidle(who:NewPlayer)->void:
 	who.tween_commend.add_tween(tween,"qiang_jumpidle")
 	var n=0
 	for i in range(4):
-		if self.rotation_degrees <1440:
+		if self.rotation_degrees >360*i:
 			n+=360
 		else:
 			break
-	var time = (n-rotation_degrees)/2700
+	var time = (n-rotation_degrees)/1800
 	var type =idle_action.idle
 	if who.tween_commend.get_tween(type):
 		who.tween_commend.erase_tween(type)
