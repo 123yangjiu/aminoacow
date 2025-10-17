@@ -16,17 +16,19 @@ func is_performable()->bool:
 
 func perform()->void:
 	#记录数据和tween
-	type = exchange_attack
+	type =exchange_attack
 	var tween = create_tween().bind_node(player)
 	player.tween_commend.add_tween(tween,type)
 	#蓄力
+	
 	tween.tween_interval(0.1)
 
 	#出招
 	weapon.audio_stream_player_2d.play()
 	weapon.monitoring = true
 
-	#收枪
+
+	#收招
 
 
 	#结束

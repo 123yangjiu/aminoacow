@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://co11igbr2jw4c"]
+
+[ext_resource type="Script" uid="uid://cypi5mjl88hlg" path="res://test/weapon/qiang/action/exchange/qiang_exchange_action.gd" id="1_16ako"]
+
+[node name="QiangExchangeAction" type="Node"]
+script = ExtResource("1_16ako")

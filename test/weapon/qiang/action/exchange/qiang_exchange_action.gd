@@ -9,17 +9,18 @@ var attack_time:float
 var back_time:float
 
 func is_performable()->bool:
-	if player.no_attack:
+	if player.no_exchange:
 		return false
 	else:
 		return true
 
 func perform()->void:
 	#记录数据和tween
+	type = exchange_attack
 	var tween = create_tween().bind_node(player)
 	player.tween_commend.add_tween(tween,type)
 	#蓄力
-	
+	tween.tween_interval(0.1)
 
 
 	#出招

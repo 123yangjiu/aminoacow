@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://ddcf67bx11bx0"]
+
+[ext_resource type="Script" uid="uid://bwvp15sh0wpet" path="res://test/weapon/gong/action/exchange/gong_exchange_action.gd" id="1_67cph"]
+
+[node name="GongExchangeAction" type="Node"]
+script = ExtResource("1_67cph")

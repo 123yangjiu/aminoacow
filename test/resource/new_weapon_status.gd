@@ -1,9 +1,9 @@
 class_name NewWeaponStatus
 extends Resource
 enum TYPE{
-	GONG,
+	QIANG,
 	JIAN,
-	QIANG
+	GONG
 }
 
 @export_category("normal_state")

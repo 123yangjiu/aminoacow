@@ -37,11 +37,10 @@ generate_mipmaps = false
 noise = SubResource("FastNoiseLite_wvbbu")
 color_ramp = SubResource("Gradient_wvbbu")
 
-[node name="NewPlayer" type="CharacterBody2D" node_paths=PackedStringArray("all_commend")]
+[node name="NewPlayer" type="CharacterBody2D"]
 collision_layer = 2
 script = ExtResource("1_wvbbu")
 init_weapon = ExtResource("7_lqln8")
-all_commend = [NodePath("all_commend/health_commend"), NodePath("all_commend/tween_commend")]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, -0.5)
@@ -83,11 +82,9 @@ region_rect = Rect2(0, 0, 7, 8)
 [node name="WeaponPack" type="Node2D" parent="Anchor"]
 z_index = -1
 script = ExtResource("11_3bab5")
-qiang = ExtResource("7_lqln8")
-jian = ExtResource("9_ajtp3")
-gong = ExtResource("9_3bab5")
 
 [node name="ElseWeapon" type="Sprite2D" parent="Anchor/WeaponPack"]
+visible = false
 self_modulate = Color(1, 1, 1, 0.5882353)
 position = Vector2(3, -2)
 rotation = 0.7853982
@@ -122,11 +119,14 @@ radial_accel_max = 5.0
 angle_max = 180.0
 
 [node name="all_commend" type="Node" parent="."]
+unique_name_in_owner = true
 
-[node name="health_commend" parent="all_commend" node_paths=PackedStringArray("_owner", "shader_owner") instance=ExtResource("6_0t4de")]
+[node name="HealthCommend" parent="all_commend" node_paths=PackedStringArray("_owner", "shader_owner") instance=ExtResource("6_0t4de")]
+unique_name_in_owner = true
 max_health = 100
 _owner = NodePath("../..")
 shader_owner = NodePath("../../Anchor/Mainsprite2D")
 
-[node name="tween_commend" parent="all_commend" node_paths=PackedStringArray("_owner") instance=ExtResource("9_v3rst")]
+[node name="TweenCommend" parent="all_commend" node_paths=PackedStringArray("_owner") instance=ExtResource("9_v3rst")]
+unique_name_in_owner = true
 _owner = NodePath("../..")

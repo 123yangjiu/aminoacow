@@ -29,5 +29,3 @@ func erase_tween(_name:StringName)->void:
 			if _key == _name and all_tween[_key] is Tween:
 				all_tween[_key].kill()
 				all_tween[_key]=null
-
-	

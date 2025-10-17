@@ -16,7 +16,6 @@ func _ready() -> void:
 func take_damage(damage:int)->void:
 	current_health -=damage 
 
-
 func set_health(value)->void:
 	current_health = max(value,0)
 	health_change.emit(current_health)

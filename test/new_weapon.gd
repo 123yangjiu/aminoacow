@@ -1,15 +1,9 @@
-#tool
 class_name NewWeapon
 extends Area2D
 
 #status
 @export var current_status:NewWeaponStatus
 @export var all_status:Array[NewWeaponStatus]
-signal weapon_exchange_up(which:NewWeaponStatus)
-signal weapon_exchange_down(which:NewWeaponStatus)
-
-var	weapon_up_else:NewWeaponStatus
-var	weapon_down_else:NewWeaponStatus
 
 @onready var hand: Node2D = $".."
 
@@ -27,6 +21,9 @@ var qiang:=false
 var jian:=false
 var gong:=false
 
+#初始时放置weapon_pack
+var is_init_weapon_pack = false
+
 
 
 func _init_status(which:NewWeaponStatus) -> void:
@@ -37,14 +34,18 @@ func _init_status(which:NewWeaponStatus) -> void:
 	normal_action = null
 	exchange_action = null
 	#其他武器放置
-	for i in all_status:
-		if i!=which:
-			if !weapon_up_else:
-				weapon_up_else= i
-				weapon_exchange_up.emit(weapon_up_else)
-			else:
-				weapon_down_else=i
-				weapon_exchange_down.emit(weapon_down_else)
+	if ! is_init_weapon_pack:
+		is_init_weapon_pack = true
+		var up_weapon =null
+		var down_weapon =null
+		for i in all_status:
+			if i!=which:
+				if !down_weapon:
+					down_weapon=i
+					SignalEvents.weapon_exchange_up.emit(down_weapon)
+				else:
+					up_weapon=i
+					SignalEvents.weapon_exchange_down.emit(up_weapon)
 	#节点基本属性
 	current_status = which
 	sprite_2d.texture = which.texture
@@ -68,9 +69,9 @@ func _init_status(which:NewWeaponStatus) -> void:
 	#确认武器类别
 	if current_status.name == current_status.TYPE.JIAN:
 		jian = true
-	if current_status.name == current_status.TYPE.QIANG:
+	elif current_status.name == current_status.TYPE.QIANG:
 		qiang = true
-	if current_status.name == current_status.TYPE.GONG:
+	elif current_status.name == current_status.TYPE.GONG:
 		gong = true
 
 func play_normal(who:NewPlayer)->void:
@@ -86,8 +87,10 @@ func play_normal(who:NewPlayer)->void:
 	var type = normal_action.normal_attack
 	if who.is_idle:
 		on_cancel_idle(who)
-	who.tween_commend.erase_tween("land_slow")
-	who.tween_commend.erase_tween("land_quick")
+	who.tween_commend.erase_tween(who.t_free_fall)
+	who.tween_commend.erase_tween(who.t_jump_fall)
+	who.tween_commend.erase_tween(who.t_land_quick)
+	who.tween_commend.erase_tween(who.t_land_slow)
 	#攻击时不能干什么
 	who.no_direction.append(type)
 	who.no_roll.append(type)
@@ -96,12 +99,13 @@ func play_normal(who:NewPlayer)->void:
 	who.no_shake.append(type)
 	who.no_down_tween.append(type)
 	who.no_idle.append(type)
+	who.no_exchange.append(type)
 	who.scale = Vector2(1.0,1.0)
 	audio_stream_player_2d.stream = current_status.normal_aiction_audio
 	audio_stream_player_2d.play()
 	normal_action.perform()
 
-func play_exchange(who:NewPlayer,which:float)->void:
+func play_exchange(who:NewPlayer,which:float)->void: 
 	#找武器,切武器
 	var current_index = all_status.find(all_status[current_status.name])
 	if current_index==-1:
@@ -113,9 +117,9 @@ func play_exchange(who:NewPlayer,which:float)->void:
 		new_index=all_status.size()-1
 	var new_weapon:NewWeaponStatus =  all_status.get(new_index)
 	if which==1:
-		weapon_exchange_up.emit(current_status)
+		SignalEvents.weapon_exchange_up.emit(current_status)
 	elif which ==-1:
-		weapon_exchange_down.emit(current_status)
+		SignalEvents.weapon_exchange_down.emit(current_status)
 	if ! new_weapon.exchange_action:
 		return
 	_init_status(new_weapon)
@@ -129,8 +133,10 @@ func play_exchange(who:NewPlayer,which:float)->void:
 	if who.is_idle:
 		on_cancel_idle(who)
 	var type = exchange_action.exchange_attack
-	who.tween_commend.erase_tween("land_slow")
-	who.tween_commend.erase_tween("land_quick")
+	who.tween_commend.erase_tween(who.t_free_fall)
+	who.tween_commend.erase_tween(who.t_jump_fall)
+	who.tween_commend.erase_tween(who.t_land_quick)
+	who.tween_commend.erase_tween(who.t_land_slow)
 	who.no_direction.append(type)
 	who.no_roll.append(type)
 	who.no_attack.append(type)
@@ -138,6 +144,7 @@ func play_exchange(who:NewPlayer,which:float)->void:
 	who.no_shake.append(type)
 	who.no_down_tween.append(type)
 	who.no_idle.append(type)
+	who.no_exchange.append(type)
 	who.scale = Vector2(1.0,1.0)
 	#武器执行攻击
 	audio_stream_player_2d.stream = current_status.exchange_aiction_audio
@@ -190,7 +197,7 @@ func qiang_jumpidle(who:NewPlayer)->void:
 			n+=360
 		else:
 			break
-	var time = (n-rotation_degrees)/1800
+	var time = (n-rotation_degrees)/1200
 	var type =idle_action.idle
 	if who.tween_commend.get_tween(type):
 		who.tween_commend.erase_tween(type)

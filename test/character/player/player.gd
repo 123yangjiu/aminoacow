@@ -22,17 +22,32 @@ const t_shake = "shake"
 const t_idle = "idle"
 const t_normal_attack = "normal_attack"
 const t_exchange_attack = "exchange_attack"
+const t_pack_idle ="pack_idle"
 
-
+#what_i_can_do字面意思
+var no_roll:Array
+var no_attack:Array
+var no_gravity:Array
+var no_move:Array
+var no_jump:Array
+var no_input:Array
+var no_motion:Array
+var no_bend:Array
+var no_direction:Array
+var no_shake:Array
+var no_bend_back:Array
+var no_idle:Array
+var no_down_tween:Array
+var no_exchange:Array
 
 #const NEW_WEAPON = preload("uid://4iby6oili3lx")
 @export var init_weapon:NewWeaponStatus
 
-
 #all_commend
-@export var all_commend:Array[Node]
-@onready var health_commend: HealthCommend = $all_commend/health_commend
-@onready var tween_commend: TweenCommend = $all_commend/tween_commend
+@onready var _all_commend: Node = %all_commend
+var all_commend:Array[Node]
+@onready var health_commend: HealthCommend = %HealthCommend
+@onready var tween_commend: TweenCommend = %TweenCommend
 
 #child_node-related
 @onready var anchor: Node2D = $Anchor
@@ -83,50 +98,31 @@ var roll_speed := 400
 var roll_sd_speed :=100
 var roll_interval := 0.3
 	#idle
-var idle_time:=3
+var idle_time:=5
 var current_time =0
 var is_idle:=false
-signal idled(who:NewPlayer)
-signal cancel_idle(who:NewPlayer)
-
 
 #other_physics-related
 var camera_flip_offest_x :=5
 var hand_flip_range :=1.5
 var roll_hf_range :=-2.5
 
-#what_i_can_do字面意思
-var no_roll:Array
-var no_attack:Array
-var no_gravity:Array
-var no_move:Array
-var no_jump:Array
-var no_input:Array
-var no_motion:Array
-var no_bend:Array
-var no_direction:Array
-var no_shake:Array
-var no_bend_back:Array
-var no_idle:Array
-var no_down_tween:Array
-var no_exchange:Array
+
 
 
 func _ready() -> void:
-	if ! weapon.weapon_exchange_down.is_connected(weapon_pack.add_down_weapon):
-		weapon.weapon_exchange_down.connect(weapon_pack.add_down_weapon)
-	if ! weapon.weapon_exchange_up.is_connected(weapon_pack.add_up_weapon):
-		weapon.weapon_exchange_up.connect(weapon_pack.add_up_weapon)
+	for child:Node in _all_commend.get_children():
+		all_commend.append(child)
 	#初始化武器
 	if init_weapon:
 		weapon._init_status(init_weapon)
 	#连接idle和取消idle的信号
-		if ! idled.is_connected(weapon.on_idled):
-			idled.connect(weapon.on_idled)
-		if !cancel_idle.is_connected(weapon.on_cancel_idle):
-			cancel_idle.connect(weapon.on_cancel_idle)
-	else :
-		weapon_pack.to_idle(self)
+		if !SignalEvents.idled.is_connected(weapon.on_idled):
+			SignalEvents.idled.connect(weapon.on_idled)
+		if !SignalEvents.cancel_idle.is_connected(weapon.on_cancel_idle):
+			SignalEvents.cancel_idle.connect(weapon.on_cancel_idle)
+	else:
+		weapon_pack.to_idle(self,weapon.all_status)
 	await get_tree().create_timer(1).timeout
 	#血量模块测试
 	#health_commend.take_damage(20)
@@ -226,7 +222,7 @@ func roll()->void:
 	if Input.is_action_just_pressed("roll"):
 		#idle时间
 		if is_idle:
-			cancel_idle.emit(self)
+			SignalEvents.cancel_idle.emit(self)
 		#no指示物及tween名字
 		var type = n_roll
 		
@@ -259,20 +255,23 @@ func idle(delta)->void:
 		if Input.is_action_pressed("left_move"):
 			current_time += delta
 			if current_time >= idle_time:
-				idled.emit(self)
+				SignalEvents.idled.emit(self)
 		elif Input.is_action_pressed("right_move"):
 			current_time += delta
 			if current_time >= idle_time:
-				idled.emit(self)
+				SignalEvents.idled.emit(self)
 	else:
 		current_time += delta
 		if current_time >= idle_time:
-			idled.emit(self)
+			SignalEvents.idled.emit(self)
 
 func weapon_attack()->void:
 	if no_attack.size() !=0:
 		return
 	if Input.is_action_just_pressed("attack"):
+		if no_exchange.size() !=0:
+			weapon.play_normal(self)
+			return
 		var up_or_down = Input.get_axis("down","up")
 		if up_or_down:
 			#切武器加切武器攻击

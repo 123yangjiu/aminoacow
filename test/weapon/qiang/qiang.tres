@@ -1,7 +1,8 @@
-[gd_resource type="Resource" script_class="NewWeaponStatus" load_steps=7 format=3 uid="uid://bone2ofdfk761"]
+[gd_resource type="Resource" script_class="NewWeaponStatus" load_steps=8 format=3 uid="uid://bone2ofdfk761"]
 
 [ext_resource type="Shape2D" uid="uid://324cd4n0xi2u" path="res://test/weapon/qiang/resource/qiang_attack_shape.tres" id="1_62owo"]
 [ext_resource type="Script" uid="uid://bdu6y5vdg1tdw" path="res://test/resource/new_weapon_status.gd" id="1_e76vt"]
+[ext_resource type="PackedScene" uid="uid://co11igbr2jw4c" path="res://test/weapon/qiang/action/exchange/qiang_exchange_action.tscn" id="2_1qwat"]
 [ext_resource type="PackedScene" uid="uid://c3163atjrsu4h" path="res://test/weapon/qiang/action/normal/qiang_normal_action.tscn" id="2_4b6wx"]
 [ext_resource type="PackedScene" uid="uid://bii18oexollf6" path="res://test/weapon/qiang/action/idle/qiang_idle_action.tscn" id="2_fbaci"]
 [ext_resource type="AudioStream" uid="uid://nbqlswcqnr2y" path="res://test/weapon/qiang/resource/qiang_sound_normalattack.wav" id="4_62owo"]
@@ -9,7 +10,6 @@
 
 [resource]
 script = ExtResource("1_e76vt")
-name = 2
 texture = ExtResource("6_1qwat")
 sprite_offset = Vector2(6.5, -0.5)
 init_offset = Vector2(-0.5, 1.5)
@@ -24,5 +24,6 @@ pack_idle_position = Vector2(-1, 0)
 pack_idle_scale = Vector2(-1, 1)
 normal_action = ExtResource("2_4b6wx")
 normal_aiction_audio = ExtResource("4_62owo")
+exchange_action = ExtResource("2_1qwat")
 idle_action = ExtResource("2_fbaci")
 metadata/_custom_type_script = "uid://bdu6y5vdg1tdw"

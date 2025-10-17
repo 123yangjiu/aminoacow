@@ -18,7 +18,7 @@ config/icon="uid://becrxi3ihoebw"
 
 [autoload]
 
-Events="*res://global/events.gd"
+SignalEvents="*res://test/signal_events.gd"
 
 [display]
 
