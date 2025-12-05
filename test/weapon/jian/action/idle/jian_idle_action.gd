@@ -34,5 +34,5 @@ func perform()->void:
 	#倒在肩上
 	tween.set_trans(Tween.TRANS_CUBIC)
 	tween.tween_property(weapon,"rotation_degrees",hand_range,hand_time)
-	tween.parallel().tween_property(weapon,"position",weapon.current_status.init_offset,hand_time)
+	tween.parallel().tween_property(weapon,"position",weapon.status.init_offset,hand_time)
 	tween.parallel().tween_property(weapon.sprite_2d,"scale",Vector2(-1.0,1.0),hand_time)

@@ -1,0 +1,22 @@
+[gd_scene load_steps=5 format=3 uid="uid://crnqnyrnyiiit"]
+
+[ext_resource type="Script" uid="uid://d271j7ajtuwyk" path="res://test/new_weapon.gd" id="1_nq3it"]
+[ext_resource type="Resource" uid="uid://cwj8cjsr3ytw2" path="res://test/weapon/jian/jian.tres" id="2_nq3it"]
+[ext_resource type="Texture2D" uid="uid://hvspcpo5yl5u" path="res://test/weapon/jian/resource/sword.png" id="3_nq3it"]
+[ext_resource type="Shape2D" uid="uid://5weiju01omyh" path="res://test/weapon/jian/resource/jian_attack_shape.tres" id="4_b6lwk"]
+
+[node name="Jian" type="Area2D"]
+script = ExtResource("1_nq3it")
+status = ExtResource("2_nq3it")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(-1, -6.5)
+texture = ExtResource("3_nq3it")
+region_rect = Rect2(0, 0, 75, 16)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-1, -9)
+shape = ExtResource("4_b6lwk")
+disabled = true
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]

@@ -1,9 +1,8 @@
-[gd_resource type="Resource" script_class="NewWeaponStatus" load_steps=5 format=3 uid="uid://hxd3dclnmglc"]
+[gd_resource type="Resource" script_class="NewWeaponStatus" load_steps=4 format=3 uid="uid://hxd3dclnmglc"]
 
 [ext_resource type="Script" uid="uid://bdu6y5vdg1tdw" path="res://test/resource/new_weapon_status.gd" id="1_3slpp"]
 [ext_resource type="Shape2D" uid="uid://7m0ny0n7kk6f" path="res://test/weapon/gong/resource/gong_attackshape.tres" id="1_liddq"]
 [ext_resource type="Texture2D" uid="uid://bj712a4bedt4n" path="res://stats/weapon/gong/art/bow.png" id="2_i7bfw"]
-[ext_resource type="PackedScene" uid="uid://ddcf67bx11bx0" path="res://test/weapon/gong/action/exchange/gong_exchange_action.tscn" id="2_vmtji"]
 
 [resource]
 script = ExtResource("1_3slpp")
@@ -13,15 +12,14 @@ init_offset = Vector2(0.5, -0.5)
 attackshape = ExtResource("1_liddq")
 attackshape_offset = Vector2(1.5, 0)
 pack_up_position = Vector2(-2, -4)
-pack_up_rotation = -45.0
+pack_up_rotation = -30.0
 pack_up_scale = Vector2(1, 1)
 pack_down_position = Vector2(-2, 1)
-pack_down_rotation = -120.0
+pack_down_rotation = 90.0
 pack_down_scale = Vector2(1, 1)
 pack_idle_position = Vector2(3, -2)
-pack_idle_rotation = 45.0
+pack_idle_rotation = 41.1
 pack_idle_scale = Vector2(1, 1)
-exchange_action = ExtResource("2_vmtji")
 left_hand_offset = Vector2(-1, 0.5)
 if_left_hand_flip = true
 metadata/_custom_type_script = "uid://bdu6y5vdg1tdw"

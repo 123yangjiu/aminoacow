@@ -1,0 +1,22 @@
+[gd_scene load_steps=5 format=3 uid="uid://dj2h4copad22i"]
+
+[ext_resource type="Script" uid="uid://d271j7ajtuwyk" path="res://test/new_weapon.gd" id="1_qumlu"]
+[ext_resource type="Resource" uid="uid://hxd3dclnmglc" path="res://test/weapon/gong/gong.tres" id="2_qumlu"]
+[ext_resource type="Texture2D" uid="uid://cvm236kftxfj5" path="res://test/weapon/gong/resource/gong.png" id="3_qumlu"]
+[ext_resource type="Shape2D" uid="uid://7m0ny0n7kk6f" path="res://test/weapon/gong/resource/gong_attackshape.tres" id="4_6t1ja"]
+
+[node name="Gong" type="Area2D"]
+script = ExtResource("1_qumlu")
+status = ExtResource("2_qumlu")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(-0.5, -0.5)
+texture = ExtResource("3_qumlu")
+region_rect = Rect2(0, 0, 75, 16)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-0.5, -0.5)
+shape = ExtResource("4_6t1ja")
+disabled = true
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]

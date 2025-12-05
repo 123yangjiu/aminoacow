@@ -6,7 +6,7 @@ const normal_attack = "normal_attack"
 const exchange_attack = "exchange_attack"
 const idle ="idle"
 
-var hand:Node2D
+var hand:HandAnchor
 var player:NewPlayer
 var weapon:NewWeapon
 var type:String

@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://bdu6y5vdg1tdw" path="res://test/resource/new_weapon_status.gd" id="1_bj0ry"]
 [ext_resource type="Shape2D" uid="uid://5weiju01omyh" path="res://test/weapon/jian/resource/jian_attack_shape.tres" id="1_kfi8r"]
-[ext_resource type="PackedScene" uid="uid://dtgwgemiy0db" path="res://test/weapon/jian/action/exchange/jian_exchange_action.tscn" id="2_mfwa5"]
+[ext_resource type="PackedScene" uid="uid://dtgwgemiy0db" path="res://test/weapon/jian/action/exchange/jian_exchange_action_up.tscn" id="2_mfwa5"]
 [ext_resource type="PackedScene" uid="uid://bexmtenaht88b" path="res://test/weapon/jian/action/idle/jian_idle_action.tscn" id="3_6633v"]
 [ext_resource type="AudioStream" uid="uid://sqk4djsus2l0" path="res://test/art/video_impact/Sword Slide 03.wav" id="3_fnpbg"]
 [ext_resource type="PackedScene" uid="uid://crulxtoavgoe5" path="res://test/weapon/jian/action/normal/jian_normal_action.tscn" id="4_qo1xc"]
@@ -12,22 +12,22 @@
 script = ExtResource("1_bj0ry")
 name = 1
 texture = ExtResource("6_m22sw")
-sprite_offset = Vector2(-1, -7)
+sprite_offset = Vector2(-1, -6.5)
 init_offset = Vector2(1.5, 0.5)
 attackshape = ExtResource("1_kfi8r")
-attackshape_offset = Vector2(-1, -9.5)
-pack_up_position = Vector2(-2, -4)
-pack_up_rotation = -30.0
+attackshape_offset = Vector2(-1, -9)
+pack_up_position = Vector2(-5, -7)
+pack_up_rotation = 141.1
 pack_up_scale = Vector2(1, 1)
-pack_down_position = Vector2(1, -1)
-pack_down_rotation = 120.0
-pack_down_scale = Vector2(1, 1)
-pack_idle_position = Vector2(-1, -2)
-pack_idle_rotation = -40.0
+pack_down_position = Vector2(7, 2)
+pack_down_rotation = -90.0
+pack_down_scale = Vector2(-1, 1)
+pack_idle_position = Vector2(-7, -7)
+pack_idle_rotation = 141.1
 pack_idle_scale = Vector2(1, 1)
 normal_action = ExtResource("4_qo1xc")
 normal_aiction_audio = ExtResource("3_fnpbg")
-exchange_action = ExtResource("2_mfwa5")
+exchange_action_up = ExtResource("2_mfwa5")
 idle_action = ExtResource("3_6633v")
 left_hand_offset = Vector2(0.5, -0.5)
 if_left_hand_flip = true

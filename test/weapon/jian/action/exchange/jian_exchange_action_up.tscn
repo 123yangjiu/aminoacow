@@ -2,5 +2,5 @@
 
 [ext_resource type="Script" uid="uid://b3aoqikx4xas4" path="res://test/weapon/jian/action/exchange/jian_exchange_action.gd" id="1_xxyo4"]
 
-[node name="JianExchangeAction" type="Node"]
+[node name="JianExchangeActionUp" type="Node"]
 script = ExtResource("1_xxyo4")

@@ -1,0 +1,22 @@
+[gd_scene load_steps=5 format=3 uid="uid://bno28x2pmfda7"]
+
+[ext_resource type="Script" uid="uid://d271j7ajtuwyk" path="res://test/new_weapon.gd" id="1_k4phn"]
+[ext_resource type="Resource" uid="uid://bone2ofdfk761" path="res://test/weapon/qiang/qiang.tres" id="2_mlre3"]
+[ext_resource type="Texture2D" uid="uid://blplsndhjt4f5" path="res://test/weapon/qiang/resource/qiang.png" id="2_tyjuk"]
+[ext_resource type="Shape2D" uid="uid://324cd4n0xi2u" path="res://test/weapon/qiang/resource/qiang_attack_shape.tres" id="3_mlre3"]
+
+[node name="Qiang" type="Area2D"]
+script = ExtResource("1_k4phn")
+status = ExtResource("2_mlre3")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(6.5, -0.5)
+texture = ExtResource("2_tyjuk")
+region_rect = Rect2(0, 0, 75, 16)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(13, -0.5)
+shape = ExtResource("3_mlre3")
+disabled = true
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]

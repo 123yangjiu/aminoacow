@@ -6,10 +6,8 @@
 script = ExtResource("1_ouaed")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-position = Vector2(6.5, -0.5)
 region_rect = Rect2(0, 0, 75, 16)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(13, -0.5)
 
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]

@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://ca26fg7pg3m8q"]
+
+[ext_resource type="Script" uid="uid://de552m286rs40" path="res://test/weapon/jian/action/exchange/jian_exchange_action_down.gd" id="1_oinvd"]
+
+[node name="JianExchangeActionDown" type="Node"]
+script = ExtResource("1_oinvd")

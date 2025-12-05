@@ -5,14 +5,14 @@
 [ext_resource type="Texture2D" uid="uid://b8d0gpcfuedg" path="res://test/art/character/you_nohand.png" id="3_0t4de"]
 [ext_resource type="Texture2D" uid="uid://bt5mdm4x8exh3" path="res://test/art/character_related/you_hand_left.png" id="4_jbp6r"]
 [ext_resource type="Texture2D" uid="uid://7mcgl8qpryg5" path="res://test/art/character_related/you_hand_right.png" id="5_0t4de"]
+[ext_resource type="Script" uid="uid://do11a1otgfx5h" path="res://test/character/player/player_related/hand_anchor.gd" id="5_t03ie"]
 [ext_resource type="PackedScene" uid="uid://d03cms0whrps4" path="res://test/commend/health_commend/health_commend.tscn" id="6_0t4de"]
-[ext_resource type="PackedScene" uid="uid://4iby6oili3lx" path="res://test/new_weapon.tscn" id="6_igf08"]
-[ext_resource type="Resource" uid="uid://bone2ofdfk761" path="res://test/weapon/qiang/qiang.tres" id="7_lqln8"]
-[ext_resource type="Script" uid="uid://bdu6y5vdg1tdw" path="res://test/resource/new_weapon_status.gd" id="8_2d0cg"]
-[ext_resource type="Resource" uid="uid://hxd3dclnmglc" path="res://test/weapon/gong/gong.tres" id="9_3bab5"]
-[ext_resource type="Resource" uid="uid://cwj8cjsr3ytw2" path="res://test/weapon/jian/jian.tres" id="9_ajtp3"]
+[ext_resource type="Script" uid="uid://bq70qtvm3hgdb" path="res://test/character/player/player_related/weapon_anchor.gd" id="6_3bab5"]
 [ext_resource type="PackedScene" uid="uid://s2n3is05nce4" path="res://test/commend/tween_commend/tween_commend.tscn" id="9_v3rst"]
+[ext_resource type="PackedScene" uid="uid://bno28x2pmfda7" path="res://test/weapon/qiang/qiang.tscn" id="11_2d0cg"]
 [ext_resource type="Script" uid="uid://xibgmh8k4qvj" path="res://test/character/player/player_related/weapon_pack.gd" id="11_3bab5"]
+[ext_resource type="PackedScene" uid="uid://dj2h4copad22i" path="res://test/weapon/gong/gong.tscn" id="11_ajtp3"]
+[ext_resource type="PackedScene" uid="uid://crnqnyrnyiiit" path="res://test/weapon/jian/jian.tscn" id="12_3bab5"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_56kpk"]
 size = Vector2(10, 9)
@@ -40,7 +40,6 @@ color_ramp = SubResource("Gradient_wvbbu")
 [node name="NewPlayer" type="CharacterBody2D"]
 collision_layer = 2
 script = ExtResource("1_wvbbu")
-init_weapon = ExtResource("7_lqln8")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, -0.5)
@@ -61,45 +60,49 @@ region_rect = Rect2(3, 3, 11, 9)
 [node name="HandAnchor" type="Node2D" parent="Anchor/Mainsprite2D"]
 use_parent_material = true
 position = Vector2(2.5, 0)
+script = ExtResource("5_t03ie")
 
-[node name="RightHand" type="Sprite2D" parent="Anchor/Mainsprite2D/HandAnchor"]
+[node name="RightHand" type="Node2D" parent="Anchor/Mainsprite2D/HandAnchor"]
 use_parent_material = true
+
+[node name="RightHandReal" type="Sprite2D" parent="Anchor/Mainsprite2D/HandAnchor/RightHand"]
 position = Vector2(2, 0.5)
 texture = ExtResource("5_0t4de")
-region_rect = Rect2(9, 4, 2, 2)
 
-[node name="Weapon" parent="Anchor/Mainsprite2D/HandAnchor" instance=ExtResource("6_igf08")]
-position = Vector2(1.5, 0.5)
-monitoring = false
-all_status = Array[ExtResource("8_2d0cg")]([ExtResource("7_lqln8"), ExtResource("9_ajtp3"), ExtResource("9_3bab5")])
+[node name="WeaponAnchor" type="Node2D" parent="Anchor/Mainsprite2D/HandAnchor"]
+script = ExtResource("6_3bab5")
 
-[node name="LeftHand" type="Sprite2D" parent="Anchor/Mainsprite2D/HandAnchor"]
+[node name="LeftHand" type="Node2D" parent="Anchor/Mainsprite2D/HandAnchor"]
 use_parent_material = true
+
+[node name="LeftHandReal" type="Sprite2D" parent="Anchor/Mainsprite2D/HandAnchor/LeftHand"]
 position = Vector2(-3, 0.5)
 texture = ExtResource("4_jbp6r")
-region_rect = Rect2(0, 0, 7, 8)
 
 [node name="WeaponPack" type="Node2D" parent="Anchor"]
 z_index = -1
 script = ExtResource("11_3bab5")
 
-[node name="ElseWeapon" type="Sprite2D" parent="Anchor/WeaponPack"]
+[node name="UpWeapon" type="Node2D" parent="Anchor/WeaponPack"]
+
+[node name="Jian" parent="Anchor/WeaponPack/UpWeapon" instance=ExtResource("12_3bab5")]
+self_modulate = Color(1, 1, 1, 0.784)
+position = Vector2(-5.0000005, -7.0000005)
+rotation = 2.4626596
+
+[node name="DownWeapon" type="Node2D" parent="Anchor/WeaponPack"]
+
+[node name="Qiang" parent="Anchor/WeaponPack/DownWeapon" instance=ExtResource("11_2d0cg")]
 visible = false
-self_modulate = Color(1, 1, 1, 0.5882353)
-position = Vector2(3, -2)
-rotation = 0.7853982
+self_modulate = Color(1, 1, 1, 0.78431374)
+position = Vector2(-6, -2)
 
-[node name="DownWeapon" type="Sprite2D" parent="Anchor/WeaponPack"]
-self_modulate = Color(1, 1, 1, 0.5882353)
-position = Vector2(-1, 0)
-rotation = 3.1415927
-scale = Vector2(1, -1)
+[node name="ElseWeapon" type="Node2D" parent="Anchor/WeaponPack"]
 
-[node name="UpWeapon" type="Sprite2D" parent="Anchor/WeaponPack"]
-self_modulate = Color(1, 1, 1, 0.5882353)
-position = Vector2(-1.0000001, -2)
-rotation = -0.6981317
-scale = Vector2(0.99999994, 0.99999994)
+[node name="Gong" parent="Anchor/WeaponPack/ElseWeapon" instance=ExtResource("11_ajtp3")]
+self_modulate = Color(1, 1, 1, 0.784)
+position = Vector2(-2, 1)
+rotation = 1.5707964
 
 [node name="CPUParticles2D" type="CPUParticles2D" parent="."]
 position = Vector2(-0.5, 5)
@@ -118,15 +121,18 @@ radial_accel_min = 5.0
 radial_accel_max = 5.0
 angle_max = 180.0
 
-[node name="all_commend" type="Node" parent="."]
+[node name="AllCommend" type="Node" parent="."]
 unique_name_in_owner = true
 
-[node name="HealthCommend" parent="all_commend" node_paths=PackedStringArray("_owner", "shader_owner") instance=ExtResource("6_0t4de")]
+[node name="HealthCommend" parent="AllCommend" node_paths=PackedStringArray("_owner", "shader_owner") instance=ExtResource("6_0t4de")]
 unique_name_in_owner = true
 max_health = 100
 _owner = NodePath("../..")
 shader_owner = NodePath("../../Anchor/Mainsprite2D")
 
-[node name="TweenCommend" parent="all_commend" node_paths=PackedStringArray("_owner") instance=ExtResource("9_v3rst")]
+[node name="TweenCommend" parent="AllCommend" node_paths=PackedStringArray("_owner") instance=ExtResource("9_v3rst")]
 unique_name_in_owner = true
 _owner = NodePath("../..")
+
+[node name="AllWeapon" type="Node" parent="."]
+unique_name_in_owner = true

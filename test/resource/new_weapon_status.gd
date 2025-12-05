@@ -1,13 +1,21 @@
 class_name NewWeaponStatus
 extends Resource
-enum TYPE{
+enum TYPE_NAME{
 	QIANG,
 	JIAN,
 	GONG
 }
+enum TYPE_PLACE{
+	_up,
+	_down,
+	_else,
+	_idle,
+	_hand
+}
+var place:TYPE_PLACE
 
 @export_category("normal_state")
-@export var name :TYPE
+@export var name :TYPE_NAME
 @export var texture:Texture
 @export var sprite_offset:Vector2
 @export var init_offset:Vector2
@@ -32,8 +40,10 @@ enum TYPE{
 @export_category("action")
 @export var normal_action:PackedScene
 @export var normal_aiction_audio:AudioStream
-@export var exchange_action:PackedScene
-@export var exchange_aiction_audio:AudioStream
+@export var exchange_action_up:PackedScene
+@export var exchange_aiction_up_audio:AudioStream
+@export var exchange_action_down:PackedScene
+@export var exchange_aiction_down_audio:AudioStream
 @export var idle_action:PackedScene
 
 @export_category("hand_state")
